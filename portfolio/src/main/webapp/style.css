@@ -7,3 +7,13 @@
 #greeting-container {
   margin-top: 20px;
 }
+
+#content, #intro {
+    background: #466368; 
+    background: linear-gradient(#648880, #293f50);
+}
+
+img.left {
+    float: center;
+    margin-right: 20px;
+ }
