@@ -8,12 +8,55 @@
   margin-top: 20px;
 }
 
-#content, #intro {
-    background: #466368; 
-    background: linear-gradient(#648880, #293f50);
+#content, #intro, #projects, #imageslideshow, #row {
+  background: #466368; 
+  background: linear-gradient(#648880, #293f50);
 }
 
 img.left {
-    float: center;
-    margin-right: 20px;
+  float: left;
+  margin-right: 20px;
+}
+
+.background {
+  float: left;
+  padding-left: 20px;
+}
+
+.blogtitle {
+  background: white;
+}
+
+.card {
+  background-color: white;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.blogimg {
+  background-color: #aaa;
+  width: 100%;
+  padding: 20px;
+  height: 20%;
+}
+
+.leftcolumn {
+  float: left;
+  width: 75%;
+}
+
+.rightcolumn {
+  float: left;
+  width: 25%;
+  padding-left: 20px;
+}
+
+.blog {
+    font-family: "Inconsolata";
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
 }
