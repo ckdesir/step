@@ -1,55 +1,91 @@
 <!DOCTYPE html>
-<meta charset="UTF-8">
-<title>My Portfolio</title>
-<link rel="stylesheet" href="style.css">
-<script src="script.js"></script>
-<div id="intro">
-  <img src="images/picture.jpg" class="left"/>
-  <h1>Who Am I?</h1>
-  <p>Hey! My name is Christopher Desir, but people that know me (which includes you, or will include you) call me Chris. I am originally from New Jersey but moved to Delaware
-    at a very young age. <!-- mvn package appengine:run -->
-  <p>Ever since I was young, I have been obsessed with PC games and with that began my fascination for computers. I remember my family only having one computer
-    that I would have to take turns sharing with my older brother. A majority of my time chunk was spent playing games made then by gaming publisher Nexon, who specialized 
-    in the MMORPG and Beat'em up genre. (Albeit I was bad, and still am) I later also loved to play League of Legends. Late 2000s and early 2010s was the prime for all of these games that I loved so much. 
-    Even though I was interested in computers, a degree in the field wasn't my first thought during high school even though it made so much sense. Coming to college has been really eye-opening.
-  <p>I am currently a freshman at Cornell University (Go Big Red!) studying computer science. My reasoning for studying comp sci stems from this love for computers mentioned earlier.  
-    I see now that it's the future of the world. The depth of topics is <i>extensive</i> and <i>mind boggling</i>. We find ourselves utilizing programming and computers more and more. There's no limit to 
-    what you can do and I want to know how I can help expand the world of technology and address today's challenges (in part to which Google is leading the way). Just recently, I saw news of a
-    professor in California briding the gap in computer accessibility in that he was able to utilize the motion of one's tongue to translate into action — it's things like this that makes me appreciate
-    computer science for it's potential. 
-  <p>I came to this internship knowing little to nothing about the world of software engineering to this scale, so I am excited to learn so many different things 
-    and gain first-hand experience.          
-</div>
-<div id="projects">
-  <h1><a href="projects.html">Some Projects</a></h1>
-</div>
-<h1>Gallery</h1>
-<div id="imageSlideshow">
-  <div class="mySlides">
-    <img src="images/CTB.jpg">
-    <div>This is Collegetown Bagels in Ithaca, NY. One of my favorite joints to eat at during any time of the day. They have this delicious bagel called the round house
-      that has scrambled eggs, bacon, sausage, and a hashbrown all on a rosemary salt bagel. It's my favorite thing to get
+<html lang="en">
+  <meta charset="UTF-8"> 
+  <title>My Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js"></script>
+  <div id="intro">
+    <img src="images/picture.jpg" id="selfie-left" alt="A picture of me."/>
+    <h1>Who Am I?</h1>
+    <p>Hey! My name is Christopher Desir, but people that
+      know me (which includes you, or will include you) call
+      me Chris. I am originally from New Jersey but
+      moved to Delaware at a very young age.
+    <p>Ever since I was young, I have been obsessed
+      with PC games and with that began my
+      fascination for computers. I remember my family only
+      having one computer that I would have to
+      take turns sharing with my older brother.
+      A majority of my time chunk was spent playing
+      games made then by gaming publisher Nexon,
+      who specialized in the MMORPG and Beat'em up genre.
+      (Albeit I was bad, and still am) I later
+      also loved to play League of Legends. Late
+      2000s and early 2010s was the prime for all of
+      these games that I loved so much. Even though
+      I was interested in computers, a degree in the field
+      wasn't my first thought during high school
+      even though it made so much sense.
+      Coming to college has been really eye-opening.
+    <p>I am currently a freshman at Cornell University (Go Big Red!) studying
+      computer science. My reasoning for studying comp sci stems from this
+      love for computers mentioned earlier. I see now that it's the
+      future of the world. The depth of topics is <i>extensive</i> and
+      <i>mind boggling</i>. We find ourselves utilizing programming
+      and computers more and more. There's no limit to what you can do and I want
+      to know how I can help expand the world of technology and address today's
+      challenges (in part to which Google is leading the way). Just
+      recently, I saw news of a professor in California bridging the
+      gap in computer accessibility in that he was able to utilize
+      the motion of one's tongue to translate into action —
+      it's things like this that makes me appreciate computer science
+      for it's potential.
+    <p>I came to this internship knowing little to nothing about
+      the world of software engineering to this scale, so I am
+      excited to learn so many different things and gain first-hand
+      experience.
+  </div>
+  <div id="projects">
+    <h1><a href="projects.html">Some Projects</a></h1>
+  </div>
+  <div id="gallery-slideshow">
+    <h1>Gallery</h1>
+    <div class="gallery-slides">
+      <img src="images/CTB.jpg" alt="A picture of the
+        inside of Collegetown Bagels.">
+      <div>This is Collegetown Bagels in Ithaca, NY. One of my
+        favorite joints to eat at during any time of the day. They 
+        have this delicious bagel called the round house that has
+        scrambled eggs, bacon, sausage, and a hashbrown all on a
+        rosemary salt bagel. It's my favorite thing to get.
+      </div>
+    </div>
+    <div class="gallery-slides">
+      <img src="images/mehak.jpg" alt="A picture of food
+        from Mehak in Ithaca.">
+      <div>This is from Mehak in Ithaca; it's another one of my
+        favorites. I've never had Indian cuisine (to which they specialize)
+        prior so trying Mehak was (and still is) a life changing experience. 
+      </div>
+    </div>
+    <div class="gallery-slides">
+      <img src="images/band.jpg" alt="A picture of me
+        in my band uniform.">
+    </div>
+    <div class="gallery-slides">
+        <img src="images/eagle.jpg" alt="A gigantic mural of an eagle.">
+        <div>This is a mural I saw when I was exploring downtown Ithaca for the
+          first time! Thought it was cool to snap a picture to commemorate.
+        </div>
+    </div>
+    <div class="gallery-slides">
+        <img src="images/picture1.jpg" alt="A picture of me at
+            the annual Apple Harvest Festival in Ithaca">
+        <div>This was from the annual Apple Harvest Festival in Ithaca. 
+          Each year, Apple Harvest Festival hosts bushels full of 
+          apple farmers and lots of delicious apple-based products
+          for one to try.
+        </div>
     </div>
   </div>
-  <div class="mySlides">
-    <img src="images/mehak.jpg">
-    <div>This is from Mehak in Ithaca; it's another one of my favorites. I've never had Indian cuisine (to which they specialize) prior
-      so trying Mehak was (and still is) a life changing experience. 
-    </div>
-  </div>
-  <div class="mySlides">
-    <img src="images/band.jpg">
-  </div>
-  <div class="mySlides">
-      <img src="images/eagle.jpg">
-      <div>This is a mural I saw when I was exploring downtown Ithaca for the
-        first time! Thought it was cool to snap a picture to commemorate.
-      </div>
-  </div>
-  <div class="mySlides">
-      <img src="images/picture1.jpg">
-      <div>This was from the annual Apple Harvest Festival in Ithaca. Each year, Apple Harvest Festival hosts bushels full of apple farmers and lots of delicious
-        apple-based products for one to try.
-      </div>
-  </div>
-</div>
+</html>
