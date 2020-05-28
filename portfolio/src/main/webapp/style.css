@@ -1,0 +1,63 @@
+
+.card-view {
+  /* Add shadows to create the "card" effect */
+  float: left;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+}
+
+#selfie-left {
+    display: block;
+    float: left;
+    max-width: auto;
+    height: auto;
+}
+
+/* Add some padding inside the card container */
+.container {
+  padding: 2px 8px;
+  float: right;
+  width: 60%;
+  font-size: large;
+  
+}
+
+
+
+/*.left-column-blog {
+  float: left;
+  width: 70%;
+}*/
+
+/* Fake image */
+.blog-image {
+  background-color: #aaa;
+  width: 100%;
+  padding: 20px;
+}
+
+/* Add a card effect for articles */
+.card-view-blog {
+  background-color: white;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+/* Clear floats after the columns */
+.row-blog-format:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 800px) {
+  .leftcolumn, .rightcolumn {
+    width: 100%;
+    padding: 0;
+  }
+}
