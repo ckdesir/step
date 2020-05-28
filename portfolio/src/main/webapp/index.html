@@ -3,7 +3,6 @@
   <meta charset="UTF-8"> 
   <title>My Portfolio</title>
   <link rel="stylesheet" href="style.css">
-  <script src="script.js"></script>
   <body>
     <div class="card-view">
       <img src="images/selfie-1.jpg" id="selfie-left" alt="A picture of me."/>
@@ -52,7 +51,7 @@
         </div>
     </div>
     <div class="card-view">
-      <div id="gallery-slideshow">
+      <div id="gallery-slideshow" class="w3-content w3-display-container">
         <h1>Gallery</h1>
         <div class="gallery-slides">
           <img src="images/CTB.jpg" alt="A picture of the
@@ -93,49 +92,57 @@
             for one to try.
           </div>
         </div>
+        <button id="button-left" onclick="switchSlides(-1)">❮</button>
+        <button id="button-right" onclick="switchSlides(1)">❯</button>
       </div>
     </div>
-  <div class="row-blog-format">
-    <div class="card-view">
-      <h2>The Time My World Changed</h2>
-      <h5>Discovering my hidden talent, May 27, 2020</h5>
-      <img src="images/ambidex.jpg" alt="A picture of a man
-        holding pens in both of his hands" class="blog-image">
-      <p class="blog-text">I am realizing now that this isn't so much 
-        a hidden talent but more so some genetic mechanism. Then again,
-        I don't really parade this around much so I guess it could 
-        be considered hidden? I am ambidexterous. The earliest memory
-        to me realizing this "talent" dates back to I believe third 
-        grade. My teacher then made us practice cursive with these
-        thick booklets. These booklets made us write sentences and
-        trace over letters over and over again, so you could probably
-        imagine my little third-grade self suffering from cramps
-        in my usual writing hand. I remember always switching to
-        my left hand whenever my right got tired, not knowing that
-        people usually aren't able to write with both. I realized
-        later the truth once I joined band in middle school, and
-        my world has not been the same since.
-      <p class="blog-text">I can also vibrate my eyes, quite literally
-        changing my world view as everything begins to shake.
-        I am also really good at remembering names.
-    </div>
-    <div class="card-view">
-      <h2>My Love for Photography</h2>
-      <h5>What? May 27, 2020</h5>
-      <img src="images/utopia.jpg" alt="A picture of
-        utopia, futuristic buildings and
-        landscapes" class="blog-image">
-      <p class="blog-text">I like taking pictures of things I find
-        cool or unconvential. I find that they make for interesting
-        talking points when shown to someone you know. I took the
-        picture you see as the feature image for this blog above
-        and it never fails to raise a striking conversation about the
-        world we live in and the beauty of it all. I also use
-        photography as a means of expression, so I like to take
-        pictures that I believe are expressive. People say that a picture
-        is worth a thousand words and to me that is very much
-        true. The slideshow below showcases images that transmit
-        so much through so little.
+    <script src="script.js"></script>
+    <div class="row-blog-format">
+      <div class="card-view">
+        <h1>A Blog</h1>
+        <h2>The Time My World Changed</h2>
+        <h5>Discovering my hidden talent — May 27, 2020</h5>
+        <img src="images/ambidex.jpg" alt="A picture of a man
+          holding pens in both of his hands" class="blog-image">
+        <p class="blog-text">I am realizing now that this isn't so much 
+          a hidden talent but more so some genetic mechanism. Then again,
+          I don't really parade this around much so I guess it could 
+          be considered hidden? I am ambidextrous. The earliest memory
+          to me realizing this "talent" dates back to I believe third 
+          grade. My teacher then made us practice cursive with these
+          thick booklets. These booklets made us write sentences and
+          trace over letters over and over again, so you could probably
+          imagine my little third-grade self suffering from cramps
+          in my usual writing hand. I remember always switching to
+          my left hand whenever my right got tired, not knowing that
+          people usually aren't able to write with both. I realized
+          later the truth once I joined band in middle school, and
+          my world has not been the same since.
+        <p class="blog-text">I can also vibrate my eyes, quite literally
+          changing my world view as everything begins to shake.
+          I am also really good at remembering names.
+      </div>
+      <div class="card-view">
+        <h2>My Love for Photography</h2>
+        <h5>What? — May 27, 2020</h5>
+        <img src="images/utopia.jpg" alt="A picture of
+          utopia, futuristic buildings and
+          landscapes" class="blog-image">
+        <p class="blog-text">I like taking pictures of things I find
+          cool or unconvential. I find that they make for interesting
+          talking points when shown to someone you know. I took the
+          picture you see as the feature image for this blog above
+          and it never fails to raise a striking conversation about the
+          world we live in and the beauty of it all. I also use
+          photography as a means of expression, so I like to take
+          pictures that I believe are expressive. People say that a picture
+          is worth a thousand words and to me that is very much
+          true. The slideshow below showcases images that transmit
+          so much through so little.
+        <div class="gallery-slides">
+          <img src="images/band.jpg" alt="A picture of me
+            in my band uniform." class="gallery-image">
+        </div>
       </div>
     </div>
     <!-- <div class="right-column-blog">
