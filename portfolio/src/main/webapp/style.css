@@ -2,9 +2,19 @@ body {
   background: #b31b1b;
 }
 
-.blog-image {
+.blog-image,
+.gallery-image {
   height: auto;
+  margin: 0 auto;
   width: 100%;
+}
+
+.blog-slides,
+.gallery-slides {
+  margin: 0 auto;
+  text-align: center;
+  padding: 15px 0 15px;
+  font-size: larger
 }
 
 button {
@@ -40,16 +50,11 @@ button {
   font-size: large;
 }
 
-.gallery-slides {
-  margin: 0 auto;
+.footer {
+  background: #ddd;
+  height: 100%;
+  padding: 20px 0 20px;
   text-align: center;
-  padding: 15px 0 15px;
-  font-size: larger
-}
-
-.gallery-image {
-  height: auto;
-  margin: 0 auto;
   width: 100%;
 }
 
