@@ -1,4 +1,4 @@
-body {
+html {
   background: #b31b1b;
   font-family: 'Inconsolata', monospace;
 }
@@ -12,10 +12,10 @@ body {
 
 .blog-slides,
 .gallery-slides {
+  font-size: larger;
   margin: 0 auto;
-  text-align: center;
   padding: 15px 0 15px;
-  font-size: larger
+  text-align: center;
 }
 
 button {
@@ -23,12 +23,12 @@ button {
   color: #fff;
 }
 
-#button-left {
-    float: left;
+#switch-slides-left {
+  float: left;
 }
 
-#button-right {
-    float: right;
+#switch-slides-right {
+  float: right;
 }
 
 .card-view {
@@ -68,5 +68,5 @@ button {
 #selfie-left {
   float: left;
   padding-right: 10px;
-  max-width: 100%
+  max-width: 100%;
 }
