@@ -93,8 +93,10 @@ button {
 
 #switch-slides-left {
   float: left;
+  padding-bottom: 10px;
 }
 
 #switch-slides-right {
   float: right;
+  padding-bottom: 10px;
 }
