@@ -12,33 +12,58 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-var slideIndex = 1;
-showSpecificSlide(slideIndex);
-carousel();
+var /** number */ slideIndexManual = 1;
+var /** number */ slideIndexAutomatic = 1;
+manualSlideShowForGallery(slideIndexManual);
+automaticSlideShowForBlog();
 
-function switchSlides(n) {
-  showSpecificSlide(slideIndex += n);
+/**
+ * Increments/decrements the slide currently being showcased on the
+ * gallery and switches to a new slide. 
+ * @param {number} whichButtonClick
+ */
+function switchSlides(whichButtonClick) {
+  manualSlideShowForGallery(slideIndexManual += whichButtonClick);
 }
 
-function showSpecificSlide(n) {
-  var i;
-  var x = document.getElementsByClassName("gallery-slides");
-  if (n > x.length) {slideIndex = 1}
-  if (n < 1) {slideIndex = x.length}
-  for (i = 0; i < x.length; i++) {
-     x[i].style.display = 'none';  
+/**
+ * Based on the current index of the slideshow and which button was clicked,
+ * this function correctly shows the required slideshow and hides those not
+ * needed. 
+ * @param {number} whichSlideToShow
+ */
+function manualSlideShowForGallery(whichSlideToShow) {
+  var /** ?HTMLCollection */ gallerySlides =
+      document.getElementsByClassName("gallery-slides");
+  var /** ?number */ gallerySlidesIndex;
+  if (whichSlideToShow > gallerySlides.length) {
+    slideIndexManual = 1;
   }
-  x[slideIndex-1].style.display = 'block';  
+  if (whichSlideToShow < 1) {
+    slideIndexManual = gallerySlides.length;
+  }
+  for (gallerySlidesIndex = 0;
+      gallerySlidesIndex < gallerySlides.length; gallerySlidesIndex++) {
+    gallerySlides[gallerySlidesIndex].style.display = 'none';  
+  }
+  gallerySlides[slideIndexManual-1].style.display = 'block';  
 }
 
-function carousel() {
-  var i;
-  var x = document.getElementsByClassName("blog-slides");
-  for (i = 0; i < x.length; i++) {
-    x[i].style.display = "none";
+/**
+ * Automatically changes the slides for the blog every 4 seconds.
+ */
+function automaticSlideShowForBlog() {
+  var /** ?HTMLCollection */ blogSlides =
+      document.getElementsByClassName("blog-slides");
+  var /** ?number */ blogSlidesIndex;
+  for (blogSlidesIndex = 0;
+      blogSlidesIndex < blogSlides.length;  blogSlidesIndex++) {
+    blogSlides[blogSlidesIndex].style.display = "none";
   }
-  slideIndex++;
-  if (slideIndex > x.length) {slideIndex = 1}
-  x[slideIndex-1].style.display = "block";
-  setTimeout(carousel, 4000); 
+  slideIndexAutomatic++;
+  if (slideIndexAutomatic > blogSlides.length) {
+    slideIndexAutomatic = 1;
+  }
+  blogSlides[slideIndexAutomatic-1].style.display = "block";
+  setTimeout(automaticSlideShowForBlog, 4000); 
 }
