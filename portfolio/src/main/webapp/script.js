@@ -12,58 +12,46 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-var /** number */ slideIndexManual = 1;
-var /** number */ slideIndexAutomatic = 1;
-manualSlideShowForGallery(slideIndexManual);
-automaticSlideShowForBlog();
+/**
+ * Represents the starting index when passed into a SlideShow object.
+ * @type {number}
+ */
+const NO_INCREMENT = 0;
 
 /**
- * Increments/decrements the slide currently being showcased on the
- * gallery and switches to a new slide. 
- * @param {number} whichButtonClick
+ * Increases the slide by one.
+ * @type {number}
  */
-function switchSlides(whichButtonClick) {
-  manualSlideShowForGallery(slideIndexManual += whichButtonClick);
-}
+const INCREMENT = 1;
 
 /**
- * Based on the current index of the slideshow and which button was clicked,
- * this function correctly shows the required slideshow and hides those not
- * needed. 
- * @param {number} whichSlideToShow
+ * Decreases the slide by one.
+ * @type {number}
  */
-function manualSlideShowForGallery(whichSlideToShow) {
-  var /** ?HTMLCollection */ gallerySlides =
-      document.getElementsByClassName("gallery-slides");
-  var /** ?number */ gallerySlidesIndex;
-  if (whichSlideToShow > gallerySlides.length) {
-    slideIndexManual = 1;
-  }
-  if (whichSlideToShow < 1) {
-    slideIndexManual = gallerySlides.length;
-  }
-  for (gallerySlidesIndex = 0;
-      gallerySlidesIndex < gallerySlides.length; gallerySlidesIndex++) {
-    gallerySlides[gallerySlidesIndex].style.display = 'none';  
-  }
-  gallerySlides[slideIndexManual-1].style.display = 'block';  
-}
+const DECREMENT = -1;
 
-/**
- * Automatically changes the slides for the blog every 4 seconds.
+/*
+ * This waits until the webpage loads and then it calls the anonymous function, which calls main.
  */
-function automaticSlideShowForBlog() {
-  var /** ?HTMLCollection */ blogSlides =
-      document.getElementsByClassName("blog-slides");
-  var /** ?number */ blogSlidesIndex;
-  for (blogSlidesIndex = 0;
-      blogSlidesIndex < blogSlides.length;  blogSlidesIndex++) {
-    blogSlides[blogSlidesIndex].style.display = "none";
-  }
-  slideIndexAutomatic++;
-  if (slideIndexAutomatic > blogSlides.length) {
-    slideIndexAutomatic = 1;
-  }
-  blogSlides[slideIndexAutomatic-1].style.display = "block";
-  setTimeout(automaticSlideShowForBlog, 4000); 
+window.onload = function() { main(); }
+
+/* 
+ * function main() initializes the slideshows and the interactive elements on the website.
+ */
+function main() {
+    const /** ?HTMLCollection */ slideShowGallery =
+        new SlideShow(document.getElementsByClassName("gallery-slides"));
+    const slideShowBlog /** ?HTMLCollection */ =
+        new SlideShow(document.getElementsByClassName("blog-slides"));
+    slideShowGallery.showSlide(NO_INCREMENT);
+    slideShowBlog.showSlide(NO_INCREMENT);
+    document.getElementById("switch-slides-left").onclick =
+        function decrementIndex() {
+          slideShowGallery.showSlide(DECREMENT); 
+    }
+    document.getElementById("switch-slides-right").onclick =
+        function incrementIndex() {
+          slideShowGallery.showSlide(INCREMENT); 
+    }
+    slideShowBlog.automaticSlideShow();
 }
