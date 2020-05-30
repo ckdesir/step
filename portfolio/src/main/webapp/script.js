@@ -13,7 +13,7 @@
 // limitations under the License.
 
 /**
- * Adjusts the SlideShow by one.
+ * Adjusts the SlideShow forward by one.
  * @type {number}
  */
 const ADJUST_FORWARD = 1;
