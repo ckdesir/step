@@ -13,22 +13,16 @@
 // limitations under the License.
 
 /**
- * Represents the starting index when passed into a SlideShow object.
+ * Adjusts the SlideShow by one.
  * @type {number}
  */
-const NO_INCREMENT = 0;
+const ADJUST_FORWARD = 1;
 
 /**
- * Increases the slide by one.
+ * Adjusts the SlideShow back one.
  * @type {number}
  */
-const INCREMENT = 1;
-
-/**
- * Decreases the slide by one.
- * @type {number}
- */
-const DECREMENT = -1;
+const ADJUST_BACK = -1;
 
 /*
  * This waits until the webpage loads and then it calls the anonymous function, which calls main.
@@ -40,18 +34,18 @@ window.onload = function() { main(); }
  */
 function main() {
     const /** ?HTMLCollection */ slideShowGallery =
-        new SlideShow(document.getElementsByClassName("gallery-slides"));
+        new SlideShow(document.getElementsByClassName('gallery-slides'));
     const slideShowBlog /** ?HTMLCollection */ =
-        new SlideShow(document.getElementsByClassName("blog-slides"));
-    slideShowGallery.showSlide(NO_INCREMENT);
-    slideShowBlog.showSlide(NO_INCREMENT);
-    document.getElementById("switch-slides-left").onclick =
-        function decrementIndex() {
-          slideShowGallery.showSlide(DECREMENT); 
+        new SlideShow(document.getElementsByClassName('blog-slides'));
+
+    slideShowBlog.setToAutomaticallyChangeSlides();
+
+    document.getElementById('switch-slides-left').onclick =
+        function adjustBackOne() {
+          slideShowGallery.adjustSlideManual(ADJUST_BACK); 
     }
-    document.getElementById("switch-slides-right").onclick =
-        function incrementIndex() {
-          slideShowGallery.showSlide(INCREMENT); 
+    document.getElementById('switch-slides-right').onclick =
+        function adjustForwardOne() {
+          slideShowGallery.adjustSlideManual(ADJUST_FORWARD); 
     }
-    slideShowBlog.automaticSlideShow();
 }
