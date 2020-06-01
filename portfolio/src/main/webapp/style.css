@@ -26,6 +26,7 @@ html {
 button {
   background: #b31b1b;
   color: #fff;
+  margin-bottom: 10px;
 }
 
 .card-view {
@@ -43,11 +44,6 @@ button {
   border: 5px solid #b31b1b;
   margin-top: 20px;
   padding: 20px;
-}
-
-.container {
-  float: right;
-  font-size: large;
 }
 
 .footer {
@@ -87,16 +83,20 @@ button {
 
 #selfie-left {
   float: left;
-  width: 30%;
+  display: block;
+  max-width: 60%;
   padding-right: 10px;
+}
+
+.container {
+  float: right;
+  font-size: large;
 }
 
 #switch-slides-left {
   float: left;
-  padding-bottom: 10px;
 }
 
 #switch-slides-right {
   float: right;
-  padding-bottom: 10px;
 }
