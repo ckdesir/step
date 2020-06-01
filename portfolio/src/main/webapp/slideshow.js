@@ -74,14 +74,12 @@ class SlideShow {
    *     adjusted.
    */
   adjustSlideManual(adjustIndex) {
-    /*
-     * This if is to prevent someone from both manually
-     * trying to adjust the slides with it already being
-     * automatic. 
-     */
+    // This if is to prevent someone from both manually
+    // trying to adjust the slides with it already being
+    // automatic. 
     if(this.mode_ == Mode.MANUAL) {
       this.slides_[this.slideIndex_].style.display = 'none';
-      this.slideIndex_ += adjustIndex
+      this.slideIndex_ += adjustIndex;
       this.slideIndex_ %= this.slides_.length;
       this.slides_[this.slideIndex_].style.display = 'block';
     }
@@ -96,14 +94,12 @@ class SlideShow {
    */
   adjustSlidesAuto_(cadence) {
     this.slides_[this.slideIndex_].style.display = 'none';
-    this.slideIndex_ += this.SINGLE_INCREMENT_
+    this.slideIndex_ += this.SINGLE_INCREMENT_;
     this.slideIndex_ %= this.slides_.length;
     this.slides_[this.slideIndex_].style.display = 'block';
     setTimeout(() => {
-      /**
-       * If the mode changes while this timeout is inflight,
-       * the method terminates and is not recalled.
-       */
+      // If the mode changes while this timeout is inflight,
+      // the method terminates and is not recalled.
       if (this.mode_ != Mode.AUTOMATIC) return;
       this.adjustSlidesAuto_(cadence);
     }, cadence);
@@ -117,11 +113,9 @@ class SlideShow {
   setMode_(mode) {
     const /** string */ old_mode = this.mode_;
     this.mode_ = mode;
-    /*
-     * This if condition prevents showSlidesAuto from being called
-     * multiple times. If a slideshow is set to automatic when it
-     * previously already was, showSlidesAuto isn't recalled.
-     */
+    // This if condition prevents showSlidesAuto from being called
+    // multiple times. If a slideshow is set to automatic when it
+    // previously already was, showSlidesAuto isn't recalled.
     if (this.mode_ != old_mode && this.mode_ == Mode.AUTOMATIC) {
       this.adjustSlidesAuto_(this.TIME_BEFORE_SWITCH_);
     }
