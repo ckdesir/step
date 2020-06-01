@@ -30,20 +30,22 @@ const ADJUST_BACK = -1;
 window.onload = function() { main(); }
 
 /* 
- * function main() initializes the slideshows and the interactive elements 
- * on the projects webpage.
+ * function main() initializes the slideshows and the interactive elements on the website.
  */
 function main() {
-    const /** ?HTMLCollection */ slideShowProjects =
-      document.getElementsByClassName('project-slides');
+    const /** ?HTMLCollection */ slideShowGallery =
+        new SlideShow(document.getElementsByClassName('gallery-slides'));
+    const /** ?HTMLCollection */ slideShowBlog  =
+        new SlideShow(document.getElementsByClassName('blog-slides'));
+
+    slideShowBlog.setToAutomaticallyChangeSlides();
 
     document.getElementById('switch-slides-left').onclick =
         function adjustBackOne() {
-          slideShowProjects.adjustSlideManual(ADJUST_BACK); 
+          slideShowGallery.adjustSlideManual(ADJUST_BACK); 
     }
     document.getElementById('switch-slides-right').onclick =
         function adjustForwardOne() {
-          slideShowProjects.adjustSlideManual(ADJUST_FORWARD); 
+          slideShowGallery.adjustSlideManual(ADJUST_FORWARD); 
     }
 }
-
