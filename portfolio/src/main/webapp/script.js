@@ -13,16 +13,39 @@
 // limitations under the License.
 
 /**
- * Adds a random greeting to the page.
+ * Adjusts the SlideShow forward by one.
+ * @type {number}
  */
-function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
+const ADJUST_FORWARD = 1;
 
-  // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+/**
+ * Adjusts the SlideShow back one.
+ * @type {number}
+ */
+const ADJUST_BACK = -1;
 
-  // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
+/*
+ * This waits until the webpage loads and then it calls the anonymous function, which calls main.
+ */
+window.onload = function() { main(); }
+
+/* 
+ * function main() initializes the slideshows and the interactive elements on the website.
+ */
+function main() {
+    const /** ?HTMLCollection */ slideShowGallery =
+        new SlideShow(document.getElementsByClassName('gallery-slides'));
+    const slideShowBlog /** ?HTMLCollection */ =
+        new SlideShow(document.getElementsByClassName('blog-slides'));
+
+    slideShowBlog.setToAutomaticallyChangeSlides();
+
+    document.getElementById('switch-slides-left').onclick =
+        function adjustBackOne() {
+          slideShowGallery.adjustSlideManual(ADJUST_BACK); 
+    }
+    document.getElementById('switch-slides-right').onclick =
+        function adjustForwardOne() {
+          slideShowGallery.adjustSlideManual(ADJUST_FORWARD); 
+    }
 }
