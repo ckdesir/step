@@ -66,7 +66,8 @@ class SlideShow {
     if(this.mode_ == Mode.MANUAL) {
       this.slides_[this.slideIndex_].style.display = 'none';
       this.slideIndex_ += adjustIndex;
-      //Fixes modulo division to account for negatives properly
+      // [((a%b) + b) % b] guarantees a 
+      // is always [0, b) even when a < 0.
       this.slideIndex_ = ((this.slideIndex_ % this.slides_.length) +
           this.slides_.length) % this.slides_.length;
       this.slides_[this.slideIndex_].style.display = 'block';

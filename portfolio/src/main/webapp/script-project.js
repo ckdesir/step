@@ -26,10 +26,10 @@ function main() {
     document.getElementById('switch-slides-left').onclick =
         function adjustBackOne() {
           slideShowProjects.adjustSlideManual(ADJUST_BACK); 
-    }
+    };
     document.getElementById('switch-slides-right').onclick =
         function adjustForwardOne() {
           slideShowProjects.adjustSlideManual(ADJUST_FORWARD); 
-    }
+    };
 }
 
