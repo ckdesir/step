@@ -3,35 +3,48 @@
   <meta charset="UTF-8">
   <title>Projects</title>
   <link rel="stylesheet" href="style.css">
-  <script src="script.js"></script>
-  <div id="projects">
+  <div class="card-view">
     <h1>Projects</h1>
-    <img src="images/python.png" alt="A picture of the Python logo"/>
-    <p>In Python I am currently building a Pac-Man like game with
-      the help of Pygame just to help keep my python in check and
-      keep it fresh in my mind.
+    <img src="images/python.png" alt="A picture of the Python logo"
+      class="project-logo"/>
+    <p class="project-text">In Python I am currently building
+      a Pac-Man like game with the help of Pygame just to help
+      keep my python in check and fresh in my mind.
     </p>
     <img src="images/paccy.png" alt="A picture of the start-up screen
-      of my game">
-    <img src="images/kotlin.png" alt="A picture of the Kotlin™ logo"/>
-    <p>With the help of Java and Kotlin™, along with
+     of my game" class="project-logo">
+  </div>
+  <div class="card-view">
+    <img src="images/kotlin.png" alt="A picture of the Kotlin™ logo"
+      class="project-logo"/>
+    <p class="project-text">With the help of Java and Kotlin™, along with
       Android Studios I have developed the apps shown below.
-    <div id="project-slideshow">
-      <div class="project-slides">
-        <img src="images/eat.gif" alt="A gif that shows some features of
-          the Eat app.">
-        <div>This app collects information about different eating spots
-          at Cornell. It allows one to maintain a list of favorites
-          and see options offered at these spots.
-        </div>
-      </div>
-      <div class="project-slides">
-        <img src="images/eng101.gif" alt="A gif that shows some features of
-          the Eng101 app">
-        <div>This app is a hub for freshman engineers at Cornell;
-          it contains information about common classes.
-        </div>
-      </div>
+    </p>
+    <div class="project-slides">
+      <img src="images/eat.gif" alt="A gif that shows some features of
+        the Eat app." class="project-slideshow-gif">
+      <p class="project-text">This app collects information 
+        about different eating spots at Cornell. It allows
+        one to maintain a list of favorites and see options
+        offered at these spots.
+    </div>
+    <div class="project-slides">
+      <img src="images/eng101.gif" alt="A gif that shows some features of
+        the Eng101 app" class="project-slideshow-gif">
+      <p class="project-text">This app is a hub for freshman
+        engineers at Cornell; it contains information about common classes.
+    </div>
+    <button id="switch-slides-left">❮</button>
+    <button id="switch-slides-right">❯</button>
+  </div>
+  <div class="card-view">
+    <div class="footer">
+      <a href="https://github.com/ckdesir">GitHub</a>
+      <a href="https://www.linkedin.com/in/christopher-desir-5a883a186/">
+        LinkedIn</a>
+      <a href="index.html">Home</a> 
     </div>
   </div>
+  <script src="slideshow.js"></script>
+  <script src="script-project.js"></script>
 </html>

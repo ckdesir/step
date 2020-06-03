@@ -35,7 +35,7 @@ window.onload = function() { main(); }
 function main() {
     const /** ?HTMLCollection */ slideShowGallery =
         new SlideShow(document.getElementsByClassName('gallery-slides'));
-    const slideShowBlog /** ?HTMLCollection */ =
+    const /** ?HTMLCollection */ slideShowBlog  =
         new SlideShow(document.getElementsByClassName('blog-slides'));
 
     slideShowBlog.setToAutomaticallyChangeSlides();

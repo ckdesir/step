@@ -5,9 +5,10 @@ html {
 
 .blog-image,
 .gallery-image {
-  height: auto;
-  margin: 0 auto;
-  width: 100%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
 }
 
 .blog-slides,
@@ -19,24 +20,18 @@ html {
 }
 
 .blog-text {
-    font-size: larger;
+  font-size: larger;
 }
 
 button {
   background: #b31b1b;
   color: #fff;
-}
-
-#switch-slides-left {
-  float: left;
-}
-
-#switch-slides-right {
-  float: right;
+  margin-bottom: 10px;
 }
 
 .card-view {
   background: #fff;
+  border: 5px solid #b31b1b;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   margin: 0 auto;
   padding: 30px;
@@ -46,13 +41,9 @@ button {
 
 .card-view-blog {
   background-color: white;
+  border: 5px solid #b31b1b;
   margin-top: 20px;
   padding: 20px;
-}
-
-.container {
-  float: right;
-  font-size: large;
 }
 
 .footer {
@@ -63,6 +54,27 @@ button {
   width: 100%;
 }
 
+.project-text {
+  font-size: large;
+  padding: 10px 0 10px;
+  text-align: center;
+}
+
+.project-logo {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 70%;
+}
+
+.project-slideshow-gif {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 60%;
+  border: 3px solid #b31b1b;
+}
+
 .row-blog-format:after {
   clear: both;
   content: '';
@@ -71,6 +83,20 @@ button {
 
 #selfie-left {
   float: left;
-  max-width: 100%;
+  display: block;
+  max-width: 60%;
   padding-right: 10px;
+}
+
+.container {
+  float: right;
+  font-size: large;
+}
+
+#switch-slides-left {
+  float: left;
+}
+
+#switch-slides-right {
+  float: right;
 }
