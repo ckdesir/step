@@ -48,4 +48,9 @@ function main() {
         function adjustForwardOne() {
           slideShowGallery.adjustSlideManual(ADJUST_FORWARD); 
     }
+    // The button is replaced with he response from the servlet, Who Am I?
+    fetch('/data').then((response) => response.text()).then((introHeading) => {
+        document.getElementById('intro-heading').innerText = introHeading;
+        document.getElementById('heading-button').style.display = 'none';
+    });
 }
