@@ -49,3 +49,14 @@ function main() {
           slideShowGallery.adjustSlideManual(ADJUST_FORWARD); 
     }
 }
+
+/* 
+ * A function for a button click, changes the button to header, Who Am I, 
+ * by gathering data from servlet.
+ */
+function fetchIntro() {
+  fetch('/data').then((response) => response.text()).then((introHeading) => {
+      document.getElementById('intro-heading').innerText = introHeading;
+      document.getElementById('heading-button').style.display = 'none';
+  });
+}
