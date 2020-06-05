@@ -38,4 +38,20 @@ public class DataServlet extends HttpServlet {
     response.setContentType("application/json;");
     response.getWriter().println(json);
   }
+
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    Date currentTime = new Date();
+    String name = request.getParameter("name");
+    String commentString = request.getParameter("comment");
+
+    Entity commentEntity = new Entity("Comment");
+    commentEntity.setProperty("name", name);
+    commentEntity.setProperty("timeOfComment", currentTime);
+    commentEntity.setProperty("comment", commentString);
+
+    datastore.put(commentEntity);
+
+    response.sendRedirect("/index.html");
+  }
 }
