@@ -48,15 +48,23 @@ function main() {
         function adjustForwardOne() {
           slideShowGallery.adjustSlideManual(ADJUST_FORWARD); 
     }
+    // Fetches the pre-made comment list from the servlet and makes 
+    // a list for each comment.
+    fetch('/comments').then(response => response.json()).then((comments) => {
+      const /** ?HTMLCollection */commentContainer =
+            document.getElementById('comments-container');
+      comments.forEach(function(comment) {
+          commentContainer.appendChild(createListElement(comment));
+      });
+    });
 }
 
-/* 
- * A function for a button click, changes the button to header, Who Am I, 
- * by gathering data from servlet.
+/*
+ * @return the <li> element containing text passed in.
+ * @param {string} text is what is put into the <li>
  */
-function fetchIntro() {
-  fetch('/data').then((response) => response.text()).then((introHeading) => {
-      document.getElementById('intro-heading').innerText = introHeading;
-      document.getElementById('heading-button').style.display = 'none';
-  });
+function createListElement(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
 }
