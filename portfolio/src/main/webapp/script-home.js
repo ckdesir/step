@@ -70,8 +70,8 @@ function populateComments() {
               document.getElementById('comments-container');
 
           comments.forEach(function(comment) {
-              commentContainer.appendChild(makeDiv(comment));
-          });
+              commentContainer.appendChild(makeDiv(comment));          
+            });
         }
     );
 }
