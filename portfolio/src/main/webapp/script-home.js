@@ -33,15 +33,8 @@ window.onload = function() { main(); }
  * function main() initializes the slideshows and the interactive elements on the website.
  */
 function main() {
-    // Fetches the pre-made comment list from the servlet and makes 
-    // a list for each comment.
-    fetch('/comments').then(response => response.json()).then((comments) => {
-      const /** ?HTMLCollection */commentContainer =
-            document.getElementById('comments-container');
-      comments.forEach(function(comment) {
-          commentContainer.appendChild(createListElement(comment));
-      });
-    });
+    initializeSlideshows();
+    populateComments();
 }
 
 /** 
@@ -80,7 +73,6 @@ function populateComments() {
             } else {
               stringOfName = comment.name;
             }
-            //Creates two headers and paragraph for the name, date, and comment.
             const /** ?HTMLCollection */ nameOfCommenter =
                 document.createElement('h3');
             nameOfCommenter.innerHTML = stringOfName;
@@ -99,7 +91,6 @@ function populateComments() {
             divOfComment.appendChild(dateOfComment);
             divOfComment.appendChild(commentString);
 
-            //Styles the div
             divOfComment.style.border='3px solid #b31b1b';
             divOfComment.style.margin='15px 0 15px';
             divOfComment.style.padding='10px';
