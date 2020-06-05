@@ -43,7 +43,7 @@ public class DataServlet extends HttpServlet {
     PreparedQuery results = datastore.prepare(query);
 
     List<Comment> listOfComments = new ArrayList<Comment>();
-    //Creates a Comment object for each entity that was previously ever posted. 
+    // Creates a Comment object for each entity that was previously ever posted. 
     for (Entity commentEntity : results.asIterable()) {
       Date timeOfComment = (Date) commentEntity.getProperty("timeOfComment");
       String name = (String) commentEntity.getProperty("name");
@@ -51,7 +51,7 @@ public class DataServlet extends HttpServlet {
       Comment comment = new Comment(timeOfComment, name, commentString);
       listOfComments.add(comment);
     }
-    //Changes the list of Comments into a JSON
+    // Changes the list of Comments into a JSON
     Gson gson = new Gson();
     String json = gson.toJson(listOfComments);
     response.setContentType("application/json;");

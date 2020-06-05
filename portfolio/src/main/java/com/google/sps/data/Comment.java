@@ -2,7 +2,9 @@ package com.google.sps.data;
 
 import java.util.Date;
 
-/** Class detailing a comment. */
+/**
+ * Class that represents a user comment.
+ **/
 public class Comment {
 
   private final Date timeOfComment;

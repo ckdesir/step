@@ -67,35 +67,44 @@ function populateComments() {
               document.getElementById('comments-container');
 
           comments.forEach(function(comment) {
-            let /** string */ stringOfName;
-            if (comment.name==null || comment.name=='') {
-              stringOfName = 'Anonymous';
-            } else {
-              stringOfName = comment.name;
-            }
-            const /** ?HTMLCollection */ nameOfCommenter =
-                document.createElement('h3');
-            nameOfCommenter.innerHTML = stringOfName;
-            const /** ?HTMLCollection */ dateOfComment =
-                document.createElement('h4');
-            dateOfComment.innerHTML =
-                "Date Posted: " + comment.timeOfComment;
-            const /** ?HTMLCollection */ commentString =
-                document.createElement('p');
-            commentString.innerHTML = comment.commentString;
-
-            //Adds the individual elements to a single div
-            const /** ?HTMLCollection */ divOfComment =
-                document.createElement('div');
-            divOfComment.appendChild(nameOfCommenter);
-            divOfComment.appendChild(dateOfComment);
-            divOfComment.appendChild(commentString);
-
-            divOfComment.style.border='3px solid #b31b1b';
-            divOfComment.style.margin='15px 0 15px';
-            divOfComment.style.padding='10px';
-
-            commentContainer.appendChild(divOfComment);
+              commentContainer.appendChild(makeDiv(comment));
           });
-        });
+        }
+    );
+}
+
+/*
+ * @return the <div> element containing all the elements of a comment
+ *    like the name, date made, and what was said.
+ * @param {JSONObject} comment is the JSONObject that is
+ *    meant to be turned into a comment
+ */
+function makeDiv(comment){
+  let /** string */ author;
+  if (comment.name === null || comment.name === '' || comment.name
+      === undefined) {
+        author = 'Anonymous';
+  } else {
+    author = comment.name;
+  }  
+  const /** ?HTMLCollection */ nameOfCommenter =
+      document.createElement('h3');
+  nameOfCommenter.innerHTML = author;
+  const /** ?HTMLCollection */ dateOfComment =
+      document.createElement('h4');
+  dateOfComment.innerHTML =
+      'Date Posted: ' + comment.timeOfComment;
+  const /** ?HTMLCollection */ commentString =
+      document.createElement('p');
+  commentString.innerHTML = comment.commentString;
+  // Adds the individual elements to a single div
+  const /** ?HTMLCollection */ divOfComment =
+      document.createElement('div');
+  divOfComment.appendChild(nameOfCommenter);
+  divOfComment.appendChild(dateOfComment);
+  divOfComment.appendChild(commentString);
+  divOfComment.style.border='3px solid #b31b1b';
+  divOfComment.style.margin='15px 0 15px';
+  divOfComment.style.padding='10px';
+  return divOfComment;
 }
