@@ -68,7 +68,6 @@ function populateComments() {
         (comments) => {
           const /** ?HTMLCollection */commentContainer =
               document.getElementById('comments-container');
-
           comments.forEach(function(comment) {
               commentContainer.appendChild(makeDiv(comment));          
             });

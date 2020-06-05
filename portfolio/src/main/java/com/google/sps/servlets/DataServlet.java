@@ -40,14 +40,19 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    // Gets the various values from the query string
+    int maxDisplayOfComments = Integer.parseInt(request.getParameter("max-numbers"));
+    Query.SortDirection sortDirection = request.getParameter("sort-direction").equals("descending")
+        ? SortDirection.DESCENDING : SortDirection.ASCENDING; 
     Query query = new Query("Comment")
-    query.addSort("timeOfComment", SortDirection.DESCENDING);
+    query.addSort(request.getParameter("entity-property"), sortDirection);
     PreparedQuery results = datastore.prepare(query);
 
     List<Comment> listOfComments = new ArrayList<Comment>();
     // Creates a Comment object for each entity that was previously ever posted. 
-    for (Entity commentEntity : results.asIterable()) {
-      listOfComments.add(Comment.fromEntity(commentEntity));
+    for (Entity commentEntity : results.asIterable(
+        FetchOptions.Builder.withLimit(maxDisplayOfComments))) {
+          listOfComments.add(Comment.fromEntity(commentEntity));
     }
     // Changes the list of Comments into a JSON
     Gson gson = new Gson();
