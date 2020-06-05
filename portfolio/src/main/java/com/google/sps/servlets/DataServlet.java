@@ -24,14 +24,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /** Servlet that returns some data refrencing comments for the webpage. */
-@WebServlet("/data")
+@WebServlet("/comments")
 public class DataServlet extends HttpServlet {
-
-  private List<String> commentMessages;
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    commentMessages = new ArrayList<String>();
+    List<String> commentMessages = new ArrayList<String>();
     commentMessages.add("This website looks real stylish!");
     commentMessages.add("I also am a lover of chicken alfredo!");
     commentMessages.add("Wow! How long did this take you?");

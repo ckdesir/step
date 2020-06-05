@@ -50,12 +50,11 @@ function main() {
     }
     // Fetches the pre-made comment list from the servlet and makes 
     // a list for each comment.
-    fetch('/data').then(response => response.json()).then((comments) => {
+    fetch('/comments').then(response => response.json()).then((comments) => {
       const /** ?HTMLCollection */commentContainer =
           document.getElementById('comments-container');
-      commentContainer.innerHTML = '';
-      for(i in comments){
-          commentContainer.appendChild(createListElement(comments[i]));
+      for(let comment in comments){
+          commentContainer.appendChild(createListElement(comments[comment]));
       }
     });
 }
