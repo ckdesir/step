@@ -32,4 +32,3 @@ function main() {
           slideShowProjects.adjustSlideManual(ADJUST_FORWARD); 
     };
 }
-
