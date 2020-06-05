@@ -1,11 +1,8 @@
 package com.google.sps.data;
 
 import java.util.Date;
-import com.google.appengine.api.datastore.Entity;
 
-/**
- * Class that represents a user comment.
- **/
+/** Class detailing a comment. */
 public class Comment {
 
   private final Date timeOfComment;
@@ -31,33 +28,8 @@ public class Comment {
   public String getName() {
     return name;
   }
-
+  
   public String getCommentString() {
     return commentString;
-  }
-
-  /**
-   * Returns a new Comment from an entity of kind "Comment".
-   * @param {Entity} commentEntity - entity of kind "Comment" with various 
-   *     properties similar to the fields of a Comment object.
-   */
-  public static Comment fromEntity(Entity commentEntity){
-    Date timeOfComment = (Date) commentEntity.getProperty("timeOfComment");
-    String name = (String) commentEntity.getProperty("name");
-    String commentString = (String) commentEntity.getProperty("comment-string");
-    return new Comment(timeOfComment, name, commentString);
-  }
-
-  /**
-   * Returns a new Entity of kind "Comment" from a Comment object.
-   * @param {Comment} comment - the Comment object that will be made into an
-   *     Entity.
-   */
-  public static Entity toEntity(Comment comment){
-    Entity commentEntity = new Entity("Comment");
-    commentEntity.setProperty("name", comment.name);
-    commentEntity.setProperty("timeOfComment", comment.timeOfComment);
-    commentEntity.setProperty("comment-string", comment.commentString);
-    return commentEntity;
   }
 }
