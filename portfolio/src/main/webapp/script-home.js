@@ -53,7 +53,6 @@ function main() {
     fetch('/comments').then(response => response.json()).then((comments) => {
       const /** ?HTMLCollection */commentContainer =
             document.getElementById('comments-container');
-      //Iterates through each individual comment in the comments json.
       comments.forEach(function(comment) {
           commentContainer.appendChild(createListElement(comment));
       });
