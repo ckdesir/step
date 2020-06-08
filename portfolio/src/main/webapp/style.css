@@ -23,7 +23,8 @@ html {
   font-size: larger;
 }
 
-button {
+button,
+#submit-button {
   background: #b31b1b;
   color: #fff;
   margin-bottom: 20px;

@@ -71,12 +71,22 @@ function initializeSlideshows() {
  * function populateComments() populates the comment board on the webpage.
  */
 function populateComments() {
+<<<<<<< HEAD
   fetch(queryString).then(response => response.json()).then(
         (comments) => {
           const /** ?HTMLCollection */commentContainer =
               document.getElementById('comments-container');
 <<<<<<< HEAD
 =======
+          // commentContainer is set to empty just in-case one is repopulating
+          // comments, prevents duplicates.
+          commentContainer.innerHTML = '';
+>>>>>>> Adds queryString changes to script-home and servlet
+=======
+  fetch("/comments", { body: updateComments() }).then(response => response.json()).then(
+        (comments) => {
+          const /** ?HTMLCollection */commentContainer =
+              document.getElementById('comments-container');
           // commentContainer is set to empty just in-case one is repopulating
           // comments, prevents duplicates.
           commentContainer.innerHTML = '';
@@ -120,8 +130,13 @@ function makeDiv(comment){
 }
 
 /**
+<<<<<<< HEAD
  * Repopulates the comments by first updating the query string 
  * based on the max-number-display and sort-comments select,
+=======
+ * Updates the query string based on the max-number-display
+ * and sort-comments select.
+>>>>>>> Adds queryString changes to script-home and servlet
  */
 function updateComments() {
     const /** string */ maxNumberDropdown =
@@ -135,6 +150,7 @@ function updateComments() {
     const /** string */sortDirection = 
         JSON.parse(document.getElementById('sort-comments'
             ).value)['sortDirection'];
+<<<<<<< HEAD
     queryString = '/comments?max-number-display='+maxNumberDropdown+'&sort-direction='+
         sortDirection+'&entity-property='+entityProperty;
     // Re-fetches comments
@@ -149,3 +165,12 @@ function deleteComments() {
   const /** Request */ deleteRequest = new Request('/delete-data', deleteInit);
   fetch(deleteRequest).then(populateComments());
 }
+=======
+  const params = new URLSearchParams();
+  params.append('lat', lat);
+  params.append('lng', lng);
+  params.append('content', content);
+  return params;
+}
+
+>>>>>>> Adds queryString changes to script-home and servlet
