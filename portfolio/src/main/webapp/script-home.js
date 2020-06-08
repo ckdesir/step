@@ -25,12 +25,14 @@ const ADJUST_FORWARD = 1;
 const ADJUST_BACK = -1;
 
 /*
- * This waits until the webpage loads and then it calls the anonymous function, which calls main.
+ * This waits until the webpage loads and then it calls the
+ * anonymous function, which calls main.
  */
 window.onload = function() { main(); }
 
 /* 
- * function main() initializes the slideshows and the interactive elements on the website.
+ * function main() initializes the slideshows and the interactive
+ * elements on the website.
  */
 function main() {
     initializeSlideshows();
@@ -38,7 +40,8 @@ function main() {
 }
 
 /** 
- * function initializeSlideshows() initializes the blog slideshow and the gallery slideshow.
+ * function initializeSlideshows() initializes the blog
+ * slideshow and the gallery slideshow.
  */
 function initializeSlideshows() {
   const /** ?HTMLCollection */ slideshowGallery =
@@ -80,13 +83,8 @@ function populateComments() {
  *    meant to be turned into a comment
  */
 function makeDiv(comment){
-  let /** string */ author;
-  if (comment.name === null || comment.name === '' || comment.name
-      === undefined) {
-        author = 'Anonymous';
-  } else {
-    author = comment.name;
-  }  
+  let /** string */author =
+      comment.name ? comment.name : 'Anonymous';
   const /** ?HTMLCollection */ nameOfCommenter =
       document.createElement('h3');
   nameOfCommenter.innerHTML = author;

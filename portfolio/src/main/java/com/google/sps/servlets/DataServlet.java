@@ -26,11 +26,12 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.gson.Gson;
 import com.google.sps.data.Comment;
-import com.google.gson.Gson;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
 
 /** Servlet that returns some data refrencing comments for the webpage. */
 @WebServlet("/comments")
@@ -39,17 +40,14 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    Query query = new Query("Comment").addSort("timeOfComment", SortDirection.DESCENDING);
+    Query query = new Query("Comment")
+    query.addSort("timeOfComment", SortDirection.DESCENDING);
     PreparedQuery results = datastore.prepare(query);
 
     List<Comment> listOfComments = new ArrayList<Comment>();
     // Creates a Comment object for each entity that was previously ever posted. 
     for (Entity commentEntity : results.asIterable()) {
-      Date timeOfComment = (Date) commentEntity.getProperty("timeOfComment");
-      String name = (String) commentEntity.getProperty("name");
-      String commentString = (String) commentEntity.getProperty("comment-string");
-      Comment comment = new Comment(timeOfComment, name, commentString);
-      listOfComments.add(comment);
+      listOfComments.add(Comment.fromEntity(commentEntity));
     }
     // Changes the list of Comments into a JSON
     Gson gson = new Gson();
@@ -61,17 +59,10 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    Date timeOfComment = new Date();
     String name = request.getParameter("name");
     String commentString = request.getParameter("comment-string");
-
-    Entity commentEntity = new Entity("Comment");
-    commentEntity.setProperty("name", name);
-    commentEntity.setProperty("timeOfComment", timeOfComment);
-    commentEntity.setProperty("comment-string", commentString);
-
-    datastore.put(commentEntity);
-
+    Jsoup.clean(commentString, Whitelist.none());
+    datastore.put(Comment.toEntity(new Comment(new Date(), name, commentString)));
     response.sendRedirect("/index.html");
   }
 }
