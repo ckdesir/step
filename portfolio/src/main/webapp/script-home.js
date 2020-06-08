@@ -24,13 +24,6 @@ const ADJUST_FORWARD = 1;
  */
 const ADJUST_BACK = -1;
 
-/**
- * The query string holds information about which way to sort
- * the comments and how many comments to display
- * @type {String}
- */
-let queryString;
-
 /*
  * This waits until the webpage loads and then it calls the
  * anonymous function, which calls main.
@@ -43,7 +36,7 @@ window.onload = function() { main(); }
  */
 function main() {
     initializeSlideshows();
-    updateComments();
+    populateComments();
 }
 
 /** 
@@ -59,11 +52,11 @@ function initializeSlideshows() {
 
   document.getElementById('switch-slides-left').onclick =
         function adjustBackOne() {
-          slideShowGallery.adjustSlideManual(ADJUST_BACK); 
+          slideshowGallery.adjustSlideManual(ADJUST_BACK); 
         };
   document.getElementById('switch-slides-right').onclick =
         function adjustForwardOne() {
-          slideShowGallery.adjustSlideManual(ADJUST_FORWARD); 
+          slideshowGallery.adjustSlideManual(ADJUST_FORWARD); 
         };
 }
 
@@ -71,26 +64,13 @@ function initializeSlideshows() {
  * function populateComments() populates the comment board on the webpage.
  */
 function populateComments() {
-<<<<<<< HEAD
-  fetch(queryString).then(response => response.json()).then(
-        (comments) => {
-          const /** ?HTMLCollection */commentContainer =
-              document.getElementById('comments-container');
-<<<<<<< HEAD
-=======
-          // commentContainer is set to empty just in-case one is repopulating
-          // comments, prevents duplicates.
-          commentContainer.innerHTML = '';
->>>>>>> Adds queryString changes to script-home and servlet
-=======
-  fetch("/comments", { body: updateComments() }).then(response => response.json()).then(
+  fetch(updateComments()).then(response => response.json()).then(
         (comments) => {
           const /** ?HTMLCollection */commentContainer =
               document.getElementById('comments-container');
           // commentContainer is set to empty just in-case one is repopulating
           // comments, prevents duplicates.
           commentContainer.innerHTML = '';
->>>>>>> Adds queryString changes to script-home and servlet
           comments.forEach(function(comment) {
               commentContainer.appendChild(makeDiv(comment));          
             });
@@ -104,7 +84,7 @@ function populateComments() {
  * @param {JSONObject} comment is the JSONObject that is
  *    meant to be turned into a comment
  */
-function makeDiv(comment){
+function makeDiv(comment) {
   let /** string */author =
       comment.name ? comment.name : 'Anonymous';
   const /** ?HTMLCollection */ nameOfCommenter =
@@ -123,23 +103,18 @@ function makeDiv(comment){
   divOfComment.appendChild(nameOfCommenter);
   divOfComment.appendChild(dateOfComment);
   divOfComment.appendChild(commentString);
-  divOfComment.style.border='3px solid #b31b1b';
-  divOfComment.style.margin='15px 0 15px';
-  divOfComment.style.padding='10px';
+  divOfComment.style.border = '3px solid #b31b1b';
+  divOfComment.style.margin = '15px 0 15px';
+  divOfComment.style.padding = '10px';
   return divOfComment;
 }
 
 /**
-<<<<<<< HEAD
- * Repopulates the comments by first updating the query string 
- * based on the max-number-display and sort-comments select,
-=======
- * Updates the query string based on the max-number-display
- * and sort-comments select.
->>>>>>> Adds queryString changes to script-home and servlet
+ * Returns the URL to the servlet and pdates the query
+ * string based on the max-number-display and sort-comments select.
  */
 function updateComments() {
-    const /** string */ maxNumberDropdown =
+    const /** string */ maxNumberDisplay =
         document.getElementById('max-number-display').value;
     // Each select value is stored as a JSON, to allow for more than one value
     // to be used, the code below just parses the sort-comments select element 
@@ -150,13 +125,14 @@ function updateComments() {
     const /** string */sortDirection = 
         JSON.parse(document.getElementById('sort-comments'
             ).value)['sortDirection'];
-<<<<<<< HEAD
-    queryString = '/comments?max-number-display='+maxNumberDropdown+'&sort-direction='+
-        sortDirection+'&entity-property='+entityProperty;
-    // Re-fetches comments
-    populateComments();
+    // Since the url of the request is read-only, a new url is made and 
+    // is modified by adding parameters
+    const commentsURL = new URL(new Request('/comments').url);
+    commentsURL.searchParams.append('max-number-display', maxNumberDisplay);
+    commentsURL.searchParams.append('sort-direction', sortDirection);
+    commentsURL.searchParams.append('entity-property', entityProperty);
+    return commentsURL;
 }
-
 /**
  * Deletes all the comments from the servlet.
  */
@@ -165,12 +141,3 @@ function deleteComments() {
   const /** Request */ deleteRequest = new Request('/delete-data', deleteInit);
   fetch(deleteRequest).then(populateComments());
 }
-=======
-  const params = new URLSearchParams();
-  params.append('lat', lat);
-  params.append('lng', lng);
-  params.append('content', content);
-  return params;
-}
-
->>>>>>> Adds queryString changes to script-home and servlet
