@@ -100,3 +100,9 @@ button {
 #switch-slides-right {
   float: right;
 }
+
+#map {
+  height: 600px;
+  margin: 0 auto;
+  width: 600px;
+}
