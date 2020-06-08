@@ -24,6 +24,13 @@ const ADJUST_FORWARD = 1;
  */
 const ADJUST_BACK = -1;
 
+/**
+ * The query string holds information about which way to sort
+ * the comments and how many comments to display
+ * @type {String}
+ */
+let queryString;
+
 /*
  * This waits until the webpage loads and then it calls the
  * anonymous function, which calls main.
@@ -36,7 +43,7 @@ window.onload = function() { main(); }
  */
 function main() {
     initializeSlideshows();
-    populateComments();
+    updateComments();
 }
 
 /** 
@@ -64,10 +71,16 @@ function initializeSlideshows() {
  * function populateComments() populates the comment board on the webpage.
  */
 function populateComments() {
-  fetch('/comments').then(response => response.json()).then(
+  fetch(queryString).then(response => response.json()).then(
         (comments) => {
           const /** ?HTMLCollection */commentContainer =
               document.getElementById('comments-container');
+<<<<<<< HEAD
+=======
+          // commentContainer is set to empty just in-case one is repopulating
+          // comments, prevents duplicates.
+          commentContainer.innerHTML = '';
+>>>>>>> Adds queryString changes to script-home and servlet
           comments.forEach(function(comment) {
               commentContainer.appendChild(makeDiv(comment));          
             });
@@ -104,4 +117,35 @@ function makeDiv(comment){
   divOfComment.style.margin='15px 0 15px';
   divOfComment.style.padding='10px';
   return divOfComment;
+}
+
+/**
+ * Repopulates the comments by first updating the query string 
+ * based on the max-number-display and sort-comments select,
+ */
+function updateComments() {
+    const /** string */ maxNumberDropdown =
+        document.getElementById('max-number-display').value;
+    // Each select value is stored as a JSON, to allow for more than one value
+    // to be used, the code below just parses the sort-comments select element 
+    // and gets the two values of the JSON
+    const /** string */entityProperty = 
+        JSON.parse(document.getElementById('sort-comments'
+            ).value)['entityProperty'];
+    const /** string */sortDirection = 
+        JSON.parse(document.getElementById('sort-comments'
+            ).value)['sortDirection'];
+    queryString = '/comments?max-number-display='+maxNumberDropdown+'&sort-direction='+
+        sortDirection+'&entity-property='+entityProperty;
+    // Re-fetches comments
+    populateComments();
+}
+
+/**
+ * Deletes all the comments from the servlet.
+ */
+function deleteComments() {
+  const /** object */ deleteInit = { method: 'POST' };
+  const /** Request */ deleteRequest = new Request('/delete-data', deleteInit);
+  fetch(deleteRequest).then(populateComments());
 }
