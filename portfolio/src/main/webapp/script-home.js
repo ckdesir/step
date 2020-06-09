@@ -82,7 +82,7 @@ function initMap() {
   // on by the callback of the mapScript above. 
   window.createMap = function() {
     const mapOptions = {
-      center: { lat: 37.422, lng: 122.084 },
+      center: { lat: 37.422, lng: -122.084 },
       zoom: 9,
       styles: [
         {
@@ -144,59 +144,71 @@ function initMap() {
     const markerLocations = [
       {
         name: 'Collegetown Bagels', 
-        location: new google.maps.LatLng(42.442262, -76.484958)
+        location: new google.maps.LatLng(42.442262, -76.484958),
+        information: 'One of my favorite places to break my fast in the' +
+          ' mornings, highly recommend!'
       },
       {
         name: 'Cozumel, Mexico',
-        location: new google.maps.LatLng(20.4230, 86.9223)
+        location: new google.maps.LatLng(20.4230, -86.9223),
+        information: 'Went here for the one and only cruise I have ever been' +
+          ' on, I don\'t recommend cruises for the faint of heart.'
       },
       {
         name: 'Haiti',
-        location: new google.maps.LatLng(18.9712, 72.2852)
+        location: new google.maps.LatLng(18.9712, -72.2852),
+        information: 'The land of my peoples 😃'
       },
       {
         name: 'Bermuda',
-        location: new google.maps.LatLng(32.3078, 64.7505)
+        location: new google.maps.LatLng(32.3078, -64.7505),
+        information: 'Spooky!'
       },
       {
         name: 'Delaware',
-        location: new google.maps.LatLng(39.1852, 75.5244)
+        location: new google.maps.LatLng(39.1852, -75.5244),
+        information: 'Also known as the first state, and that\'s all ' +
+          'it has going for it'
       },
       {
-        name: 'Anaheim',
-        location: new google.maps.LatLng(33.8366, 117.9143)
+        name: 'Anaheim, CA',
+        location: new google.maps.LatLng(33.8366, -117.9143),
+        information: 'Went here for a \"field trip\" once; Disney is pretty ' +
+          'cool + In-N-Out is overrated'
       },
       {
         name: 'Kansas City, MO',
-        location: new google.maps.LatLng(39.0997, 94.5786)
+        location: new google.maps.LatLng(39.0997, -94.5786),
+        information: 'Another \"field trip\", the food and vibes here were ' +
+          'amazing'
       },
     ]
-
     markerLocations.forEach(function (place) {
-      //createMarker(map, place.location, place.name);
+      createMarker(map, place.location, place.name, place.information);
     });
-    // const collegeTownBagels = { lat: 42.442262, lng: -76.484958 };
-    // const mehak = { lat: 42.441920, lng: -76.487770 };
-    // const cozumel = { lat: 20.4230, lng: 86.9223 };
-    // const haiti = { lat: 18.9712, lng: 72.2852 };
-    // const bermuda = { lat: 32.3078, lng: 64.7505 };
-    // const delaware = { lat: 39.1582, lng: 75.5244 };
-    // const anaheim = { lat: 33.8366, lng: 117.9143 };
-    // const kansasCity = { lat: 39.0997, lng: 94.5786 };
   };
   document.head.appendChild(mapScript);
 }
 
 /**
- * Creates a simple marker with a name
+ * Creates a simple marker with a name and a info window with click listener
  * @param {object} map 
- * @param {object} location
- * @param {string} name 
+ * @param {pbject} location
+ * @param {string} name
+ * @param {string} information 
  */
-function createMarker(map, location, name) {
+function createMarker(map, location, name, information) {
   const marker = new google.maps.Marker({
     position: location,
     map: map,
     title: name
   });
+  const infoWindow = new google.maps.InfoWindow();
+  google.maps.event.addListener(marker, 'click', (function (marker, information, infoWindow) {
+    return function () {
+      infoWindow.close()
+      infoWindow.setContent(information);
+      infoWindow.open(map,marker);
+    }
+  })(marker, information, infoWindow)); 
 }
