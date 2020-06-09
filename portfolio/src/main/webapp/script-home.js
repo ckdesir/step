@@ -71,7 +71,8 @@ function createListElement(text) {
 }
 
 /*
- * Creates a map using the Google Maps API.
+ * Creates a map using the Google Maps API. Also allows user
+ * to create their own markers!
  */
 function initMap() {
   const mapScript = document.createElement('script');
@@ -80,7 +81,7 @@ function initMap() {
   mapScript.async = true;
   // The callback function is attached to the 'window', called 
   // on by the callback of the mapScript above. 
-  window.createMap = function() {
+  window.createMap = function () {
     const mapOptions = {
       center: { lat: 37.422, lng: -122.084 },
       zoom: 9,
@@ -143,7 +144,7 @@ function initMap() {
     const map = new google.maps.Map(document.getElementById('map'), mapOptions);
     const markerLocations = [
       {
-        name: 'Collegetown Bagels', 
+        name: 'Collegetown Bagels',
         location: new google.maps.LatLng(42.442262, -76.484958),
         information: 'One of my favorite places to break my fast in the' +
           ' mornings, highly recommend!'
@@ -168,7 +169,7 @@ function initMap() {
         name: 'Delaware',
         location: new google.maps.LatLng(39.1852, -75.5244),
         information: 'Also known as the first state, and that\'s all ' +
-          'it has going for it'
+          'it is known for!'
       },
       {
         name: 'Anaheim, CA',
@@ -184,20 +185,50 @@ function initMap() {
       },
     ]
     markerLocations.forEach(function (place) {
-      createMarker(map, place.location, place.name, place.information);
+      createMarkerSelf(map, place.location, place.name, place.information);
     });
+    // When the user clicks in the map, show a marker with a text box the user can
+    // edit.
+    map.addListener('click', (event) => {
+      createMarkerForEdit(event.latLng.lat(), event.latLng.lng());
+    });
+
+    fetchMarkers();
   };
   document.head.appendChild(mapScript);
 }
 
+/** Fetches markers from the backend and adds them to the map. */
+function fetchMarkers() {
+  fetch('/markers').then(response => response.json()).then((markers) => {
+    markers.forEach(
+      (marker) => {
+        createMarkerForDisplay(marker.lat, marker.lng, marker.content)
+      });
+  });
+}
+
+/** Creates a marker that shows a read-only info window when clicked. */
+function createMarkerForDisplay(lat, lng, content) {
+  const marker =
+    new google.maps.Marker({ position: { lat: lat, lng: lng }, map: map });
+
+  const infoWindow = new google.maps.InfoWindow({ content: content });
+  marker.addListener('click', () => {
+    infoWindow.close();
+    infoWindow.open(map, marker);
+  });
+}
+
 /**
- * Creates a simple marker with a name and a info window with click listener
+ * Creates a simple marker with a name and a info window with click listener.
+ * The information provided is from the creator and not from user input. 
  * @param {object} map 
  * @param {pbject} location
  * @param {string} name
  * @param {string} information 
  */
-function createMarker(map, location, name, information) {
+function createMarkerSelf(map, location, name, information) {
   const marker = new google.maps.Marker({
     position: location,
     map: map,
@@ -206,9 +237,67 @@ function createMarker(map, location, name, information) {
   const infoWindow = new google.maps.InfoWindow();
   google.maps.event.addListener(marker, 'click', (function (marker, information, infoWindow) {
     return function () {
-      infoWindow.close()
+      infoWindow.close();
       infoWindow.setContent(information);
-      infoWindow.open(map,marker);
+      infoWindow.open(map, marker);
     }
-  })(marker, information, infoWindow)); 
+  })(marker, information, infoWindow));
+}
+
+/** Creates a marker that shows a textbox the user can edit. */
+function createMarkerForEdit(lat, lng) {
+  // If we're already showing an editable marker, then remove it.
+  if (editMarker) {
+    editMarker.setMap(null);
+  }
+  editMarker =
+    new google.maps.Marker(
+      {
+        position: { lat: lat, lng: lng },
+        map: map,
+        icon: {
+          url: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+        }
+      }
+    );
+  const infoWindow =
+    new google.maps.InfoWindow({ content: buildInfoWindowInput(lat, lng) });
+  // When the user closes the editable info window, remove the marker.
+  google.maps.event.addListener(infoWindow, 'closeclick', () => {
+    editMarker.setMap(null);
+  });
+  infoWindow.open(map, editMarker);
+}
+
+/**
+ * Builds and returns HTML elements that show an editable textbox and a submit
+ * button.
+ */
+function buildInfoWindowInput(lat, lng) {
+  const textBox = document.createElement('textarea');
+  const button = document.createElement('button');
+  button.appendChild(document.createTextNode('Submit'));
+
+  button.onclick = () => {
+    postMarker(lat, lng, textBox.value);
+    createMarkerForDisplay(lat, lng, textBox.value);
+    editMarker.setMap(null);
+  };
+
+  const containerDiv = document.createElement('div');
+  containerDiv.appendChild(textBox);
+  containerDiv.appendChild(document.createElement('br'));
+  containerDiv.appendChild(button);
+
+  return containerDiv;
+}
+
+/** Sends a marker to the backend for saving. */
+function postMarker(lat, lng, content) {
+  const params = new URLSearchParams();
+  params.append('lat', lat);
+  params.append('lng', lng);
+  params.append('content', content);
+
+  fetch('/markers', { method: 'POST', body: params });
 }
