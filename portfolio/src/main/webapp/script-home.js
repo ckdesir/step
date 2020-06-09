@@ -235,13 +235,18 @@ function createMarkerSelf(map, location, name, information) {
     title: name
   });
   const infoWindow = new google.maps.InfoWindow();
-  google.maps.event.addListener(marker, 'click', (function (marker, information, infoWindow) {
-    return function () {
-      infoWindow.close();
-      infoWindow.setContent(information);
-      infoWindow.open(map, marker);
-    }
-  })(marker, information, infoWindow));
+  marker.addListener('click', () => {
+    infoWindow.close();
+    infoWindow.setContent(information);
+    infoWindow.open(map, marker);
+  })
+  // google.maps.event.addListener(marker, 'click', (function (marker, information, infoWindow) {
+  //   return function () {
+  //     infoWindow.close();
+  //     infoWindow.setContent(information);
+  //     infoWindow.open(map, marker);
+  //   }
+  // })(marker, information, infoWindow));
 }
 
 /** Creates a marker that shows a textbox the user can edit. */
