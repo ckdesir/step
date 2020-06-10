@@ -165,7 +165,7 @@ function initMap() {
       },
       {
         name: 'Bermuda',
-        location: new google.maps.LatLng(32.3078, -64.7505),
+        location: new google.maps.LatLng(25.52, -70.35),
         information: 'Spooky!'
       },
       {
@@ -254,18 +254,13 @@ function createMarkerSelf(map, location, name, information) {
     title: name
   });
   const infoWindow = new google.maps.InfoWindow();
-  marker.addListener('click', () => {
-    infoWindow.close();
-    infoWindow.setContent(information);
-    infoWindow.open(map, marker);
-  })
-  // google.maps.event.addListener(marker, 'click', (function (marker, information, infoWindow) {
-  //   return function () {
-  //     infoWindow.close();
-  //     infoWindow.setContent(information);
-  //     infoWindow.open(map, marker);
-  //   }
-  // })(marker, information, infoWindow));
+  google.maps.event.addListener(marker, 'click', (function (marker, information, infoWindow) {
+    return function () {
+      infoWindow.close();
+      infoWindow.setContent(information);
+      infoWindow.open(map, marker);
+    }
+  })(marker, information, infoWindow));
 }
 
 /** Creates a marker that shows a textbox the user can edit. */
