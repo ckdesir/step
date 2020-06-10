@@ -27,6 +27,8 @@ const ADJUST_BACK = -1;
 /* Editable marker that displays when a user clicks in the map. */
 let editMarker;
 
+let map;
+
 /*
  * This waits until the webpage loads and then it calls the anonymous function, which calls main.
  */
@@ -144,7 +146,7 @@ function initMap() {
         }
       ]
     };
-    const map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    map = new google.maps.Map(document.getElementById('map'), mapOptions);
     const markerLocations = [
       {
         name: 'Collegetown Bagels',
@@ -164,7 +166,7 @@ function initMap() {
         information: 'The land of my peoples 😃'
       },
       {
-        name: 'Bermuda',
+        name: 'Bermuda Triangle',
         location: new google.maps.LatLng(25.52, -70.35),
         information: 'Spooky!'
       },
@@ -188,7 +190,7 @@ function initMap() {
       },
     ]
     markerLocations.forEach(function (place) {
-      createMarkerSelf(map, place.location, place.name, place.information);
+      createMarkerSelf(place.location, place.name, place.information);
     });
     // When the user clicks in the map, show a marker with a text box the user can
     // edit.
@@ -230,7 +232,15 @@ function fetchMarkers() {
 /** Creates a marker that shows a read-only info window when clicked. */
 function createMarkerForDisplay(lat, lng, content) {
   const marker =
-    new google.maps.Marker({ position: { lat: lat, lng: lng }, map: map });
+    new google.maps.Marker(
+      {
+        position: { lat: lat, lng: lng },
+        map: map,
+        icon: {
+          url: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+        }
+      }
+    );
 
   const infoWindow = new google.maps.InfoWindow({ content: content });
   marker.addListener('click', () => {
@@ -242,25 +252,24 @@ function createMarkerForDisplay(lat, lng, content) {
 /**
  * Creates a simple marker with a name and a info window with click listener.
  * The information provided is from the creator and not from user input. 
- * @param {object} map 
  * @param {pbject} location
  * @param {string} name
  * @param {string} information 
  */
-function createMarkerSelf(map, location, name, information) {
-  const marker = new google.maps.Marker({
-    position: location,
-    map: map,
-    title: name
+function createMarkerSelf(location, name, information) {
+  const marker = 
+    new google.maps.Marker(
+      {
+        position: location,
+        map: map,
+        title: name
+      }
+    );
+  const infoWindow = new google.maps.InfoWindow({ content: information });
+  marker.addListener('click', () => {
+    infoWindow.close();
+    infoWindow.open(map, marker);
   });
-  const infoWindow = new google.maps.InfoWindow();
-  google.maps.event.addListener(marker, 'click', (function (marker, information, infoWindow) {
-    return function () {
-      infoWindow.close();
-      infoWindow.setContent(information);
-      infoWindow.open(map, marker);
-    }
-  })(marker, information, infoWindow));
 }
 
 /** Creates a marker that shows a textbox the user can edit. */
