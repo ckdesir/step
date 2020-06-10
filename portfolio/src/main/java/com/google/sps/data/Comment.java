@@ -8,6 +8,20 @@ import com.google.appengine.api.datastore.Entity;
  **/
 public class Comment {
 
+  public enum SortType {
+    // Sort by time of comment, descending
+    BY_TIME_DESC, 
+
+    // Sort by time of comment, ascending
+    BY_TIME_ASC, 
+
+    // Sort by length of comment, ascending
+    BY_COMMENT_LENGTH_ASC,
+
+    // Sort by length of comment, descending
+    BY_COMMENT_LENGTH_DESC;
+  } 
+
   private final Date timeOfComment;
   private final String name;
   private final String commentString;
@@ -44,7 +58,7 @@ public class Comment {
   public static Comment fromEntity(Entity commentEntity){
     Date timeOfComment = (Date) commentEntity.getProperty("timeOfComment");
     String name = (String) commentEntity.getProperty("name");
-    String commentString = (String) commentEntity.getProperty("comment-string");
+    String commentString = (String) commentEntity.getProperty("commentString");
     return new Comment(timeOfComment, name, commentString);
   }
 
@@ -57,7 +71,7 @@ public class Comment {
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("name", comment.name);
     commentEntity.setProperty("timeOfComment", comment.timeOfComment);
-    commentEntity.setProperty("comment-string", comment.commentString);
+    commentEntity.setProperty("commentString", comment.commentString);
     commentEntity.setProperty("lengthOfComment", comment.commentString.length());
     return commentEntity;
   }

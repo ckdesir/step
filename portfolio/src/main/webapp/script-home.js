@@ -72,8 +72,8 @@ function populateComments() {
           // comments, prevents duplicates.
           commentContainer.innerHTML = '';
           comments.forEach(function(comment) {
-              commentContainer.appendChild(makeDiv(comment));          
-            });
+            commentContainer.appendChild(buildCommentDiv(comment));          
+          });
         }
     );
 }
@@ -84,7 +84,7 @@ function populateComments() {
  * @param {JSONObject} comment is the JSONObject that is
  *    meant to be turned into a comment
  */
-function makeDiv(comment) {
+function buildCommentDiv(comment) {
   let /** string */author =
       comment.name ? comment.name : 'Anonymous';
   const /** ?HTMLCollection */ nameOfCommenter =
@@ -116,28 +116,22 @@ function makeDiv(comment) {
 function updateComments() {
     const /** string */ maxNumberDisplay =
         document.getElementById('max-number-display').value;
-    // Each select value is stored as a JSON, to allow for more than one value
-    // to be used, the code below just parses the sort-comments select element 
-    // and gets the two values of the JSON
-    const /** string */entityProperty = 
-        JSON.parse(document.getElementById('sort-comments'
-            ).value)['entityProperty'];
-    const /** string */sortDirection = 
-        JSON.parse(document.getElementById('sort-comments'
-            ).value)['sortDirection'];
+    const /** string */ commentSort = 
+        document.getElementById('comment-sort').value;
     // Since the url of the request is read-only, a new url is made and 
     // is modified by adding parameters
     const commentsURL = new URL(new Request('/comments').url);
     commentsURL.searchParams.append('max-number-display', maxNumberDisplay);
-    commentsURL.searchParams.append('sort-direction', sortDirection);
-    commentsURL.searchParams.append('entity-property', entityProperty);
+    commentsURL.searchParams.append('comment-sort', commentSort);
     return commentsURL;
 }
+
 /**
  * Deletes all the comments from the servlet.
  */
 function deleteComments() {
-  const /** object */ deleteInit = { method: 'POST' };
-  const /** Request */ deleteRequest = new Request('/delete-data', deleteInit);
+  const /** Request */ deleteRequest = new Request('/delete-comments', {
+      method: 'POST'
+    });
   fetch(deleteRequest).then(populateComments());
 }

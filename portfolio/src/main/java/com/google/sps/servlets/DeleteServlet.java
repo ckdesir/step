@@ -12,17 +12,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /** Servlet that deletes all Comment entites. */
-@WebServlet("/delete-data")
+@WebServlet("/delete-comments")
 public class DeleteServlet extends HttpServlet {
-
-  private DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     Query query = new Query("Comment");
     PreparedQuery results = datastore.prepare(query);
     for (Entity commentEntity : results.asIterable()) {
-      datastore.delete(commentEntity.getKey());
+       datastore.delete(commentEntity.getKey());
     }
     response.setStatus(HttpServletResponse.SC_OK);
   }

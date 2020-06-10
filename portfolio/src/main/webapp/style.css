@@ -104,9 +104,15 @@ button,
 
 #comment {
   height: 200px;
+  max-height: 300px;
+  max-width: 100%;
   width: 100%;
 }
 
 #comment-header {
   padding: 10px 0 10px;
+}
+
+.tab { 
+  text-indent: 40px; 
 }

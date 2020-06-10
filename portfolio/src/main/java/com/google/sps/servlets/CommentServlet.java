@@ -36,13 +36,12 @@ import org.jsoup.safety.Whitelist;
 
 /** Servlet that returns some data refrencing comments for the webpage. */
 @WebServlet("/comments")
-public class DataServlet extends HttpServlet {
+public class CommentServlet extends HttpServlet {
   
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    List<Comment> listOfComments = getComments(request.getParameter("max-number-display"),
-        request.getParameter("sort-direction"), request.getParameter("entity-property"));
-    // Changes the list of Comments into a JSON
+    List<Comment> listOfComments = getComments(request.getParameter("comment-sort"),
+        Integer.parseInt(request.getParameter("max-number-display")));
     Gson gson = new Gson();
     String json = gson.toJson(listOfComments);
     response.setContentType("application/json;");
@@ -61,26 +60,40 @@ public class DataServlet extends HttpServlet {
   /** 
    * Fetches comments from Datastore.
    * @return a list containing all the comments stored in the servlet
-   * @param {string} maxNumberDisplay - how many comments to display on the board
-   * @param {string} sortDirection - which direction to sort: ascending or descending.
-   * @param {string} entityProperty - represents which property of the entity
-   *   to sort off of (either the date the comment was made or the length of comment)
+   * @param {String} commentSortType - represents which property of the entity to
+   *    to sort off of (either the date the comment was made or the length of comment)
+   *    and the direction to sort (ascending or descending).
+   * @param {int} maxNumberDisplay - how many comments to display on the board
    */
-  private List<Comment> getComments(String maxNumberDisplay, String sortDirection,
-      String entityProperty) {
-        List<Comment> comments = new ArrayList<>();
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-
-        Query.SortDirection sortDirectionQuery = sortDirection.equals("descending")
-            ? SortDirection.DESCENDING : SortDirection.ASCENDING; 
-        Query query = new Query("Comment");
-        query.addSort(entityProperty, sortDirectionQuery);
-
-        PreparedQuery results = datastore.prepare(query);
-        for (Entity commentEntity : results.asIterable(
-            FetchOptions.Builder.withLimit(Integer.parseInt(maxNumberDisplay)))) {
-              comments.add(Comment.fromEntity(commentEntity));
-            }
-        return comments;
+  private List<Comment> getComments(String commentSortType, int maxNumberDisplay) {
+    List<Comment> comments = new ArrayList<>();
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    Query query = getCommentQuery(Comment.SortType.valueOf(commentSortType));
+    PreparedQuery results = datastore.prepare(query);
+    // Limits the number of entities returned by the result as an iterable.
+    for (Entity commentEntity : results.asIterable(
+        FetchOptions.Builder.withLimit(maxNumberDisplay))) {
+          comments.add(Comment.fromEntity(commentEntity));
     }
+    return comments;
+  }
+
+  /**
+   * Returns a new query restricted by client-side input.
+   * @param {Comment.SortType} commentSortType - represents which property of the entity to
+   *    to sort off of (either the date the comment was made or the length of comment)
+   *    and the direction to sort (ascending or descending).
+   */
+    private Query getCommentQuery(Comment.SortType commentSortType) {
+    switch (commentSortType) {
+      case BY_TIME_ASC:
+        return new Query("Comment").addSort("timeOfComment", Query.SortDirection.ASCENDING);
+      case BY_COMMENT_LENGTH_DESC:
+        return new Query("Comment").addSort("lengthOfComment", Query.SortDirection.DESCENDING);
+      case BY_COMMENT_LENGTH_ASC:
+        return new Query("Comment").addSort("lengthOfComment", Query.SortDirection.ASCENDING);
+      default:
+        return new Query("Comment").addSort("timeOfComment", Query.SortDirection.DESCENDING);
+    }
+  }
 }
