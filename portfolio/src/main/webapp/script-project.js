@@ -11,13 +11,14 @@ const ADJUST_FORWARD = 1;
 const ADJUST_BACK = -1;
 
 /*
- * This waits until the webpage loads and then it calls the anonymous function, which calls main.
+ * This waits until the webpage loads and then it calls the
+ * anonymous function, which calls main.
  */
 window.onload = function() { main(); }
 
 /* 
- * function main() initializes the slideshows and the interactive elements 
- * on the projects webpage.
+ * function main() initializes the slideshows and 
+ * the interactive elements on the projects webpage.
  */
 function main() {
     const /** ?HTMLCollection */ slideShowProjects =
