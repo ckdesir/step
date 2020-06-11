@@ -8,6 +8,9 @@ import com.google.appengine.api.datastore.Entity;
  **/
 public class Comment {
 
+  /**
+   * Enum that represents the different methods of sorting a Comment
+   **/
   public enum SortType {
     // Sort by time of comment, descending
     BY_TIME_DESC, 

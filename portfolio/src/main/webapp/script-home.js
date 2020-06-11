@@ -103,9 +103,7 @@ function buildCommentDiv(comment) {
   divOfComment.appendChild(nameOfCommenter);
   divOfComment.appendChild(dateOfComment);
   divOfComment.appendChild(commentString);
-  divOfComment.style.border = '3px solid #b31b1b';
-  divOfComment.style.margin = '15px 0 15px';
-  divOfComment.style.padding = '10px';
+  divOfComment.className = 'comment-div'
   return divOfComment;
 }
 
