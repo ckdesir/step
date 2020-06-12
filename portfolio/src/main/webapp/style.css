@@ -23,7 +23,8 @@ html {
   font-size: larger;
 }
 
-button {
+button,
+#submit-button {
   background: #b31b1b;
   color: #fff;
   margin-bottom: 20px;
@@ -36,7 +37,7 @@ button {
   margin: 0 auto;
   padding: 30px;
   transition: .3s;
-  width: 45%;
+  width: 70%;
 }
 
 .card-view-blog {
@@ -44,6 +45,12 @@ button {
   border: 5px solid #b31b1b;
   margin-top: 20px;
   padding: 20px;
+}
+
+.comment-div {
+  border: '3px solid #b31b1b';
+  margin: '15px 0 15px';
+  padding: '10px';
 }
 
 .footer {
@@ -105,12 +112,25 @@ button {
   height: 600px;
   margin: 0 auto;
   width: 600px;
+}
   
 #comment {
   height: 200px;
+  max-height: 300px;
+  max-width: 100%;
   width: 100%;
 }
 
 #comment-header {
   padding: 10px 0 10px;
+}
+
+.comment-div {
+  border: '3px solid #b31b1b';
+  margin: '15px 0 15px';
+  padding: '10px';
+}
+
+.tab { 
+  text-indent: 40px; 
 }

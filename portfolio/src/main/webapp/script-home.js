@@ -53,11 +53,11 @@ function initializeSlideshows() {
 
   document.getElementById('switch-slides-left').onclick =
         function adjustBackOne() {
-          slideShowGallery.adjustSlideManual(ADJUST_BACK); 
+          slideshowGallery.adjustSlideManual(ADJUST_BACK); 
         };
   document.getElementById('switch-slides-right').onclick =
         function adjustForwardOne() {
-          slideShowGallery.adjustSlideManual(ADJUST_FORWARD); 
+          slideshowGallery.adjustSlideManual(ADJUST_FORWARD); 
         };
 }
 
@@ -65,13 +65,15 @@ function initializeSlideshows() {
  * function populateComments() populates the comment board on the webpage.
  */
 function populateComments() {
-  fetch('/comments').then(response => response.json()).then(
+  fetch(buildUpdateCommentsURL()).then(response => response.json()).then(
         (comments) => {
           const /** ?HTMLCollection */commentContainer =
               document.getElementById('comments-container');
-
+          // commentContainer is set to empty just in-case one is repopulating
+          // comments, prevents duplicates.
+          commentContainer.innerHTML = '';
           comments.forEach(function(comment) {
-              commentContainer.appendChild(makeDiv(comment));
+            commentContainer.appendChild(buildCommentDiv(comment));          
           });
         }
     );
@@ -83,7 +85,7 @@ function populateComments() {
  * @param {JSONObject} comment is the JSONObject that is
  *    meant to be turned into a comment
  */
-function makeDiv(comment){
+function buildCommentDiv(comment) {
   let /** string */author =
       comment.name ? comment.name : 'Anonymous';
   const /** ?HTMLCollection */ nameOfCommenter =
@@ -102,27 +104,43 @@ function makeDiv(comment){
   divOfComment.appendChild(nameOfCommenter);
   divOfComment.appendChild(dateOfComment);
   divOfComment.appendChild(commentString);
-  divOfComment.style.border='3px solid #b31b1b';
-  divOfComment.style.margin='15px 0 15px';
-  divOfComment.style.padding='10px';
+  divOfComment.className = 'comment-div'
   return divOfComment;
 }
 
+/**
+ * Returns the URL to the servlet and pdates the query
+ * string based on the max-number-display and sort-comments select.
+ */
+function buildUpdateCommentsURL() {
+  const /** string */ maxNumberDisplay =
+      document.getElementById('max-number-display').value;
+  const /** string */ commentSort = 
+      document.getElementById('comment-sort').value;
+  // Since the url of the request is read-only, a new url is made and 
+  // is modified by adding parameters
+  const commentsURL = new URL(new Request('/comments').url);
+  commentsURL.searchParams.append('max-number-display', maxNumberDisplay);
+  commentsURL.searchParams.append('comment-sort', commentSort);
+  return commentsURL;
+}
+
+/**
+ * Deletes all the comments from the servlet.
+ */
+function deleteComments() {
+  const /** Request */ deleteRequest = new Request('/delete-comments', {
+      method: 'POST'
+    });
+  fetch(deleteRequest).then(populateComments());
+}
+  
 /*
  * Creates a map using the Google Maps API.
  */
 function initMap() {
-  // The callback function is attached to the 'window', called 
-  // on by the callback of the mapScript below by one of its URL parameters.
-  window.createMap = function() {
-    const map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: -34.397, lng: 150.644},
-      zoom: 9
-    });
-  };
-  const mapScript = document.createElement('script');
-  mapScript.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBI_pU_plN3tOYv6h0SohPZ7qWBWafJgvs&callback=createMap';
-  mapScript.defer = true;
-  mapScript.async = true;
-  document.head.appendChild(mapScript);
+  const map = new google.maps.Map(document.getElementById('map'), {
+    center: { lat: 37.422, lng: -122.084 },
+    zoom: 9
+  });
 }

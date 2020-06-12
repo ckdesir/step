@@ -21,15 +21,15 @@ window.onload = function() { main(); }
  * the interactive elements on the projects webpage.
  */
 function main() {
-    const /** ?HTMLCollection */ slideShowProjects =
+    const /** ?HTMLCollection */ slideshowProjects =
       new SlideShow(document.getElementsByClassName('project-slides'));
 
     document.getElementById('switch-slides-left').onclick =
         function adjustBackOne() {
-          slideShowProjects.adjustSlideManual(ADJUST_BACK); 
+          slideshowProjects.adjustSlideManual(ADJUST_BACK); 
     };
     document.getElementById('switch-slides-right').onclick =
         function adjustForwardOne() {
-          slideShowProjects.adjustSlideManual(ADJUST_FORWARD); 
+          slideshowProjects.adjustSlideManual(ADJUST_FORWARD); 
     };
 }
