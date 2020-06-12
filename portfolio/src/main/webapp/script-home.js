@@ -37,6 +37,7 @@ window.onload = function() { main(); }
 function main() {
     initializeSlideshows();
     populateComments();
+    initMap();
 }
 
 /** 
@@ -105,4 +106,23 @@ function makeDiv(comment){
   divOfComment.style.margin='15px 0 15px';
   divOfComment.style.padding='10px';
   return divOfComment;
+}
+
+/*
+ * Creates a map using the Google Maps API.
+ */
+function initMap() {
+  // The callback function is attached to the 'window', called 
+  // on by the callback of the mapScript below by one of its URL parameters.
+  window.createMap = function() {
+    const map = new google.maps.Map(document.getElementById('map'), {
+      center: {lat: -34.397, lng: 150.644},
+      zoom: 9
+    });
+  };
+  const mapScript = document.createElement('script');
+  mapScript.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBI_pU_plN3tOYv6h0SohPZ7qWBWafJgvs&callback=createMap';
+  mapScript.defer = true;
+  mapScript.async = true;
+  document.head.appendChild(mapScript);
 }

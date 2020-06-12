@@ -101,6 +101,11 @@ button {
   float: right;
 }
 
+#map {
+  height: 600px;
+  margin: 0 auto;
+  width: 600px;
+  
 #comment {
   height: 200px;
   width: 100%;
