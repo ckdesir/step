@@ -47,6 +47,12 @@ button,
   padding: 20px;
 }
 
+.comment-div {
+  border: '3px solid #b31b1b';
+  margin: '15px 0 15px';
+  padding: '10px';
+}
+
 .footer {
   background: #ddd;
   height: 100%;
@@ -102,6 +108,12 @@ button,
   float: right;
 }
 
+#map {
+  height: 600px;
+  margin: 0 auto;
+  width: 600px;
+}
+  
 #comment {
   height: 200px;
   max-height: 300px;

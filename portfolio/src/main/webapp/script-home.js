@@ -37,6 +37,7 @@ window.onload = function() { main(); }
 function main() {
     initializeSlideshows();
     populateComments();
+    initMap();
 }
 
 /** 
@@ -64,7 +65,7 @@ function initializeSlideshows() {
  * function populateComments() populates the comment board on the webpage.
  */
 function populateComments() {
-  fetch(updateComments()).then(response => response.json()).then(
+  fetch(buildUpdateCommentsURL()).then(response => response.json()).then(
         (comments) => {
           const /** ?HTMLCollection */commentContainer =
               document.getElementById('comments-container');
@@ -104,9 +105,6 @@ function buildCommentDiv(comment) {
   divOfComment.appendChild(dateOfComment);
   divOfComment.appendChild(commentString);
   divOfComment.className = 'comment-div'
-  divOfComment.style.border = '3px solid #b31b1b';
-  divOfComment.style.margin = '15px 0 15px';
-  divOfComment.style.padding = '10px';
   return divOfComment;
 }
 
@@ -114,17 +112,17 @@ function buildCommentDiv(comment) {
  * Returns the URL to the servlet and pdates the query
  * string based on the max-number-display and sort-comments select.
  */
-function updateComments() {
-    const /** string */ maxNumberDisplay =
-        document.getElementById('max-number-display').value;
-    const /** string */ commentSort = 
-        document.getElementById('comment-sort').value;
-    // Since the url of the request is read-only, a new url is made and 
-    // is modified by adding parameters
-    const commentsURL = new URL(new Request('/comments').url);
-    commentsURL.searchParams.append('max-number-display', maxNumberDisplay);
-    commentsURL.searchParams.append('comment-sort', commentSort);
-    return commentsURL;
+function buildUpdateCommentsURL() {
+  const /** string */ maxNumberDisplay =
+      document.getElementById('max-number-display').value;
+  const /** string */ commentSort = 
+      document.getElementById('comment-sort').value;
+  // Since the url of the request is read-only, a new url is made and 
+  // is modified by adding parameters
+  const commentsURL = new URL(new Request('/comments').url);
+  commentsURL.searchParams.append('max-number-display', maxNumberDisplay);
+  commentsURL.searchParams.append('comment-sort', commentSort);
+  return commentsURL;
 }
 
 /**
@@ -135,4 +133,14 @@ function deleteComments() {
       method: 'POST'
     });
   fetch(deleteRequest).then(populateComments());
+}
+  
+/*
+ * Creates a map using the Google Maps API.
+ */
+function initMap() {
+  const map = new google.maps.Map(document.getElementById('map'), {
+    center: { lat: 37.422, lng: -122.084 },
+    zoom: 9
+  });
 }
