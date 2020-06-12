@@ -64,7 +64,7 @@ function initializeSlideshows() {
  * function populateComments() populates the comment board on the webpage.
  */
 function populateComments() {
-  fetch(updateComments()).then(response => response.json()).then(
+  fetch(buildUpdateCommentsURL()).then(response => response.json()).then(
         (comments) => {
           const /** ?HTMLCollection */commentContainer =
               document.getElementById('comments-container');
@@ -111,7 +111,7 @@ function buildCommentDiv(comment) {
  * Returns the URL to the servlet and pdates the query
  * string based on the max-number-display and sort-comments select.
  */
-function updateComments() {
+function buildUpdateCommentsURL() {
     const /** string */ maxNumberDisplay =
         document.getElementById('max-number-display').value;
     const /** string */ commentSort = 
