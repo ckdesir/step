@@ -26,22 +26,41 @@ import java.util.Collections;
 public final class FindMeetingQuery {
   /**
    * Returns a list of TimeRanges where a group of people can meet,
-   * restrained by the events they have throughout the day.
-   *
-   * Part the algorithm iterates through the list of events,
-   * finding potential time of meetings in-between events. The second
-   * part then goes through these potential meeting times and looks for
-   * those that satisfy the amount of time that needs to be allotted, as
-   * specified in the request.
+   * restrained by the events they have throughout the day. 
+   * 
+   * More specifically, if there are time slots where optional attendees to
+   * the meeting can attend along with mandatory attendees, this list is returned,
+   * otherwise, only the list of meetings of mandatory attendees is returned.
    *
    * @param {Collection<Event>} events
    * @param {MeetingRequest} request
    */
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
+    List<String> allAttendees = new ArrayList<>(request.getOptionalAttendees());
+    allAttendees.addAll(request.getAttendees());
+    Collection<TimeRange> timeOfMeetingsOptional = checkMeetingTimes(
+        events, request.getDuration(), allAttendees);
+    if(timeOfMeetingsOptional.isEmpty() && request.getAttendees().size() > 0) { 
+      return checkMeetingTimes(events, request.getDuration(), request.getAttendees());
+    }
+    return timeOfMeetingsOptional;
+  }
+
+  /**
+   * Returns a list of TimeRanges where a group of people can meet,
+   * restrained by the events they have throughout the day. 
+
+   * Part of the algorithm iterates through the list of events,
+   * finding potential time of meetings in-between events. The second
+   * part then goes through these potential meeting times and looks for
+   * those that satisfy the amount of time that needs to be allotted, as
+   * specified in the request.
+   */
+  private Collection<TimeRange> checkMeetingTimes(Collection<Event> events, long meetingDuration, Collection<String> attendees) {
     List<Event> eventsList = new ArrayList<>(events);
     Collection<TimeRange> timeOfMeetings = new ArrayList<>();
     int potentialMeetingTimeStart = TimeRange.START_OF_DAY;
-    eventsList.removeIf(event -> !request.getAttendees().containsAll(event.getAttendees()));
+    eventsList.removeIf(event -> !attendees.containsAll(event.getAttendees()));
     Collections.sort(eventsList, (Event e1, Event e2) ->
         TimeRange.ORDER_BY_START.compare(e1.getWhen(), e2.getWhen()));
     for(Event conflictingEvent : eventsList) {
@@ -57,7 +76,7 @@ public final class FindMeetingQuery {
     }
     timeOfMeetings.add(TimeRange.fromStartEnd(potentialMeetingTimeStart,
         TimeRange.END_OF_DAY, /*inclusiveEndBound=*/true));
-    timeOfMeetings.removeIf(timeRange -> timeRange.duration() < request.getDuration());
+    timeOfMeetings.removeIf(timeRange -> timeRange.duration() < meetingDuration);
     return timeOfMeetings;
   }
 }
