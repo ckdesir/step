@@ -41,7 +41,8 @@ public final class FindMeetingQuery {
     List<Event> eventsList = new ArrayList<>(events);
     Collection<TimeRange> timeOfMeetings = new ArrayList<>();
     int potentialMeetingTimeStart = TimeRange.START_OF_DAY;
-    eventsList.removeIf(event -> !request.getAttendees().containsAll(event.getAttendees()));
+    eventsList.removeIf(event -> Collections.disjoint(request.getAttendees(),
+        event.getAttendees()));
     Collections.sort(eventsList, (Event e1, Event e2) ->
         TimeRange.ORDER_BY_START.compare(e1.getWhen(), e2.getWhen()));
     for(Event conflictingEvent : eventsList) {
