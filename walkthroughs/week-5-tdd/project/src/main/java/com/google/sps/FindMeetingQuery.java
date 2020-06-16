@@ -14,10 +14,51 @@
 
 package com.google.sps;
 
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
+/**
+ * Class that finds suitable times for a group of people to meet.
+ **/
 public final class FindMeetingQuery {
+  /**
+   * Returns a list of TimeRanges where a group of people can meet,
+   * restrained by the events they have throughout the day.
+   *
+   * Part the algorithm iterates through the list of events,
+   * finding potential time of meetings in-between events. The second
+   * part then goes through these potential meeting times and looks for
+   * those that satisfy the amount of time that needs to be allotted, as
+   * specified in the request.
+   *
+   * @param {Collection<Event>} events
+   * @param {MeetingRequest} request
+   */
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-    throw new UnsupportedOperationException("TODO: Implement this method.");
+    List<Event> eventsList = new ArrayList<>(events);
+    Collection<TimeRange> timeOfMeetings = new ArrayList<>();
+    int potentialMeetingTimeStart = TimeRange.START_OF_DAY;
+    eventsList.removeIf(event -> Collections.disjoint(request.getAttendees(),
+        event.getAttendees()));
+    Collections.sort(eventsList, (Event e1, Event e2) ->
+        TimeRange.ORDER_BY_START.compare(e1.getWhen(), e2.getWhen()));
+    for(Event conflictingEvent : eventsList) {
+      int conflictingEventStart = conflictingEvent.getWhen().start();
+      int conflictingEventEnd = conflictingEvent.getWhen().end();
+      if(conflictingEventStart > potentialMeetingTimeStart) {
+        timeOfMeetings.add(TimeRange.fromStartEnd(potentialMeetingTimeStart,
+            conflictingEventStart, /*inclusiveEndBound=*/false));
+      }
+      if(conflictingEventEnd > potentialMeetingTimeStart) {
+        potentialMeetingTimeStart = conflictingEventEnd;
+      }
+    }
+    timeOfMeetings.add(TimeRange.fromStartEnd(potentialMeetingTimeStart,
+        TimeRange.END_OF_DAY, /*inclusiveEndBound=*/true));
+    timeOfMeetings.removeIf(timeRange -> timeRange.duration() < request.getDuration());
+    return timeOfMeetings;
   }
 }

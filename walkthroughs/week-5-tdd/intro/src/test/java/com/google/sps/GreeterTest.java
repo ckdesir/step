@@ -14,7 +14,8 @@
 
 package com.google.sps;
 
-import org.junit.Assert;
+import static org.junit.Assert.*;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -22,12 +23,31 @@ import org.junit.runners.JUnit4;
 @RunWith(JUnit4.class)
 public final class GreeterTest {
 
+  private Greeter greeter;
+
+  @Before
+  public void setUp() {
+    greeter = new Greeter();
+  }
+
   @Test
   public void testGreeting() {
-    Greeter greeter = new Greeter();
+    String actualGreeting = greeter.greet("No");
+    String expectedGreeting = "Hello No";
+    assertEquals(expectedGreeting, actualGreeting);
+  }
 
-    String greeting = greeter.greet("Ada");
+  @Test
+  public void testGreetingTrimsWhitespace() {
+    String actualGreeting = greeter.greet("   rebase   ");
+    String expectedGreeting = "Hello rebase";
+    assertEquals(expectedGreeting, actualGreeting);
+  }
 
-    Assert.assertEquals("Hello Ada", greeting);
+  @Test
+  public void testGreetingWithSymbols() {
+    String actualGreeting = greeter.greet("%i");
+    String expectedGreeting = "Hello i";
+    assertEquals(expectedGreeting, actualGreeting);
   }
 }
