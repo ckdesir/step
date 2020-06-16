@@ -101,15 +101,15 @@ public final class FindMeetingQueryTest {
     // Have each person have different events. We should see two options because each person has
     // split the restricted times.
     //
-    // Events  :       |--A--|     |--B--|
-    // Day     : |-----------------------------|
-    // Options : |--1--|     |--2--|     |--3--|
+    // Events  :       |--A--|     |--BC--|
+    // Day     : |------------------------------|
+    // Options : |--1--|     |--2--|      |--3--|
 
     Collection<Event> events = Arrays.asList(
         new Event("Event 1", TimeRange.fromStartDuration(TIME_0800AM, DURATION_30_MINUTES),
             Arrays.asList(PERSON_A)),
         new Event("Event 2", TimeRange.fromStartDuration(TIME_0900AM, DURATION_30_MINUTES),
-            Arrays.asList(PERSON_B)));
+            Arrays.asList(PERSON_B, PERSON_C)));
 
     MeetingRequest request =
         new MeetingRequest(Arrays.asList(PERSON_A, PERSON_B), DURATION_30_MINUTES);
@@ -136,10 +136,10 @@ public final class FindMeetingQueryTest {
         new Event("Event 1", TimeRange.fromStartDuration(TIME_0830AM, DURATION_60_MINUTES),
             Arrays.asList(PERSON_A)),
         new Event("Event 2", TimeRange.fromStartDuration(TIME_0900AM, DURATION_60_MINUTES),
-            Arrays.asList(PERSON_B)));
+            Arrays.asList(PERSON_B, PERSON_C)));
 
     MeetingRequest request =
-        new MeetingRequest(Arrays.asList(PERSON_A, PERSON_B), DURATION_30_MINUTES);
+        new MeetingRequest(Arrays.asList(PERSON_A, PERSON_B, PERSON_C), DURATION_30_MINUTES);
 
     Collection<TimeRange> actual = query.query(events, request);
     Collection<TimeRange> expected =
