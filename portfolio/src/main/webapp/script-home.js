@@ -24,13 +24,20 @@ const ADJUST_FORWARD = 1;
  */
 const ADJUST_BACK = -1;
 
-/*
+/**
+ * Represents the map on the main webpage
+ */
+let map;
+
+import * as mapConstants from './map-constants.js';
+
+/**
  * This waits until the webpage loads and then it calls the
  * anonymous function, which calls main.
  */
 window.onload = function() { main(); }
 
-/* 
+/**
  * function main() initializes the slideshows and the interactive
  * elements on the website.
  */
@@ -79,7 +86,7 @@ function populateComments() {
     );
 }
 
-/*
+/**
  * @return the <div> element containing all the elements of a comment
  *    like the name, date made, and what was said.
  * @param {JSONObject} comment is the JSONObject that is
@@ -135,12 +142,35 @@ function deleteComments() {
   fetch(deleteRequest).then(populateComments());
 }
   
-/*
+/**
  * Creates a map using the Google Maps API.
  */
 function initMap() {
-  const map = new google.maps.Map(document.getElementById('map'), {
-    center: { lat: 37.422, lng: -122.084 },
-    zoom: 9
+  map = new google.maps.Map(document.getElementById('map'),
+      mapConstants.MAP_OPTIONS);
+  mapConstants.MARKERS.forEach(function (place) {
+    createMarkerForDisplay(place.location, place.content, place.name);
+  });
+  mapConstants.BERMUDA_TRIANGLE.setMap(map);
+}
+
+/** 
+ * Creates a marker that shows a read-only info window when clicked.
+ * @param {object} location - location of marker
+ * @param {string} content - content for infoWindow
+ * @param {string} name - name of marker
+ */
+function createMarkerForDisplay(location, content, name) {
+  const marker =
+    new google.maps.Marker(
+      {
+        position: location,
+        map: map,
+        title: name
+      }
+    );
+  const infoWindow = new google.maps.InfoWindow({ content: content });
+  marker.addListener('click', () => {
+    infoWindow.open(map, marker);
   });
 }
